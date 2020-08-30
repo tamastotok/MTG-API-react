@@ -1,13 +1,29 @@
 import React from "react";
 import "./App.css";
-//import SearchBar from "./components/SearchBar";
-import Fetch from "./components/Fetch";
+import NewFetch from "./components/NewFetch";
+import {
+  CardsProvider,
+  ColorFilterProvider,
+  TypeFilterProvider,
+  TestFilterProvider,
+  ColorsProvider,
+} from "./components/DataContext";
 
 function App() {
   return (
-    <div className="App">
-      <Fetch />
-    </div>
+    <CardsProvider>
+      <ColorFilterProvider>
+        <ColorsProvider>
+          <TypeFilterProvider>
+            <TestFilterProvider>
+              <div className="App">
+                <NewFetch />
+              </div>
+            </TestFilterProvider>
+          </TypeFilterProvider>
+        </ColorsProvider>
+      </ColorFilterProvider>
+    </CardsProvider>
   );
 }
 

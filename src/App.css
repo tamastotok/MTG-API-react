@@ -34,3 +34,9 @@
 .checkbox-container label {
   margin-right: 10px;
 }
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
