@@ -33,6 +33,17 @@ export const TypeFilterProvider = (props) => {
   );
 };
 
+export const RarityFilterContext = createContext();
+export const RarityFilterProvider = (props) => {
+  const [rarityFilter, setRarityFilter] = useState([]);
+
+  return (
+    <RarityFilterContext.Provider value={[rarityFilter, setRarityFilter]}>
+      {props.children}
+    </RarityFilterContext.Provider>
+  );
+};
+
 export const TestFilterContext = createContext();
 export const TestFilterProvider = (props) => {
   const [testFilter, setTestFilter] = useState([]);

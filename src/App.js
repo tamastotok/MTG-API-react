@@ -7,6 +7,7 @@ import {
   TypeFilterProvider,
   TestFilterProvider,
   ColorsProvider,
+  RarityFilterProvider,
 } from "./components/DataContext";
 
 function App() {
@@ -15,11 +16,13 @@ function App() {
       <ColorFilterProvider>
         <ColorsProvider>
           <TypeFilterProvider>
-            <TestFilterProvider>
-              <div className="App">
-                <NewFetch />
-              </div>
-            </TestFilterProvider>
+            <RarityFilterProvider>
+              <TestFilterProvider>
+                <div className="App">
+                  <NewFetch />
+                </div>
+              </TestFilterProvider>
+            </RarityFilterProvider>
           </TypeFilterProvider>
         </ColorsProvider>
       </ColorFilterProvider>

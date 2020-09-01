@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import Card from "./Card";
 import ColorFilter from "./ColorFilter";
 import Button from "./Button";
+import Rarity from "./Rarity";
 import {
   CardsContext,
   ColorFilterContext,
   TypeFilterContext,
   TestFilterContext,
+  RarityFilterContext,
 } from "./DataContext";
 
 //* cards = egész api data EZ A FŐ TÖMB!!! (global)
@@ -27,6 +29,7 @@ const NewFetch = (props) => {
   const [value, setValue] = useState("");
   const [colorFilter, setColorFilter] = useContext(ColorFilterContext);
   const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
+  const [rarityFilter, setRarityFilter] = useContext(TypeFilterContext);
   const [testFilter, setTestFilter] = useContext(TestFilterContext);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -42,6 +45,8 @@ const NewFetch = (props) => {
         setIsLoaded(true);
       });
   }, []);
+
+  console.log(cards);
 
   //! 3. Vagy itt csinálni kölön változót filterrle és beírni JSX-be
 
@@ -63,7 +68,11 @@ const NewFetch = (props) => {
             <ColorFilter />
           </div>
 
-          <Button />
+          <div className="dropdown-container">
+            <Button />
+            <Rarity />
+          </div>
+
           <div className="list-container">
             {testFilter.map((item) => {
               return (
@@ -73,7 +82,6 @@ const NewFetch = (props) => {
                   name={item.name}
                   colors={item.colors}
                   types={item.types}
-                  subtypes={item.subtypes}
                   rarity={item.rarity}
                   img={item.imageUrl}
                   text={item.text}

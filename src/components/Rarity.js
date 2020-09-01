@@ -9,7 +9,7 @@ import {
 import ColorFilter from "./ColorFilter";
 import NewFetch from "./NewFetch";
 
-const Button = (props) => {
+const Rarity = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [cards, setCards] = useContext(CardsContext);
   const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
@@ -22,41 +22,41 @@ const Button = (props) => {
     setShowMenu(!showMenu);
   };
 
-  const everyType = cards.map((element) => element.types[0]);
-  let types = [...new Set(Object.values(everyType))];
+  const everyRarity = cards.map((element) => element.rarity);
+  let rarities = [...new Set(Object.values(everyRarity))];
 
-  const typeChange = (e, index) => {
-    const newFilterT = [e];
-    setTypeFilter(newFilterT);
-    console.log(newFilterT);
+  const rarityChange = (e, index) => {
+    const newFilterR = [e];
+    setTypeFilter(newFilterR);
+    console.log(newFilterR);
 
     const arrayType = [];
     cards.map((item) => {
-      return item.types[0] === e ? arrayType.push(item) : null;
+      return item.rarity === e ? arrayType.push(item) : null;
     });
 
     colorFilter.length > 0
-      ? setTestFilter(colors.filter((r) => r.types[0] === e))
-      : setTestFilter(cards.filter((r) => r.types[0] === e));
+      ? setTestFilter(colors.filter((r) => r.rarity === e))
+      : setTestFilter(cards.filter((r) => r.rarity === e));
   };
 
-  const showAllType = () => {
+  const showAllRarity = () => {
     setTestFilter(colors);
   };
 
   return (
     <div className="dropdown">
-      <button onClick={dropDown}>Type</button>
+      <button onClick={dropDown}>Rarity</button>
       {showMenu ? (
         <div className="menu">
-          <button onClick={showAllType}>All types</button>
-          {types.map((element, index) => {
+          <button onClick={showAllRarity}>All types</button>
+          {rarities.map((element, index) => {
             return (
               <button
                 key={index}
                 value={element}
                 index={index}
-                onClick={(e) => typeChange(e.target.value, index)}
+                onClick={(e) => rarityChange(e.target.value, index)}
               >
                 {element}
               </button>
@@ -67,4 +67,4 @@ const Button = (props) => {
     </div>
   );
 };
-export default Button;
+export default Rarity;

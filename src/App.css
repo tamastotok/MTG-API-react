@@ -35,6 +35,16 @@
   margin-right: 10px;
 }
 
+.dropdown-container {
+  display: flex;
+  width: fit-content;
+}
+
+.dropdown {
+  margin: 0 20px;
+  width: 100px;
+}
+
 .menu {
   display: flex;
   flex-direction: column;
