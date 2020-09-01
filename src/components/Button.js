@@ -40,12 +40,16 @@ const Button = (props) => {
       : setTestFilter(cards.filter((r) => r.types[0] === e));
   };
 
+  const showAllType = () => {
+    setTestFilter(colors);
+  };
+
   return (
     <div>
       <button onClick={dropDown}>Types</button>
       {showMenu ? (
         <div className="menu">
-          <button onClick={props.allType}>All types</button>
+          <button onClick={showAllType}>All types</button>
           {types.map((element, index) => {
             return (
               <button
