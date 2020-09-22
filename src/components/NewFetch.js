@@ -11,25 +11,14 @@ import {
   RarityFilterContext,
 } from "./DataContext";
 
-//* cards = egész api data EZ A FŐ TÖMB!!! (global)
-
-//* value = searchbar értékét tárolja (string)(egyelőre local)
-
-//* colorfilter,typefilter stb = filterezett tömbök...
-//*                              checkboxok és gombok,
-//*                              használja a cards tömböt (global)
-
-//* testfilter = egyesített tömb amiben a ...filter tömbök vannak,
-//*              ez lesz majd renderelve a végén (global)
-
-//* isloaded = api betöltését jelzi (local)
+// colors[0],types[0],rarity
 
 const NewFetch = (props) => {
   const [cards, setCards] = useContext(CardsContext);
   const [value, setValue] = useState("");
   const [colorFilter, setColorFilter] = useContext(ColorFilterContext);
   const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
-  const [rarityFilter, setRarityFilter] = useContext(TypeFilterContext);
+  const [rarityFilter, setRarityFilter] = useContext(RarityFilterContext);
   const [testFilter, setTestFilter] = useContext(TestFilterContext);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -39,18 +28,30 @@ const NewFetch = (props) => {
       .then((response) => response.json())
       .catch((error) => console.log(error))
       .then((data) => {
-        //setCards(data.cards);
         setCards(data.cards);
-        setTestFilter(data.cards);
+        //setTestFilter(data.cards);
         setIsLoaded(true);
       });
   }, []);
 
-  console.log(cards);
+  const allFilter = (e) => {};
+  console.log("color: ", testFilter);
+  //console.log("type: ", typeFilter);
+  //console.log("rarity: ", rarityFilter);
 
-  //! 3. Vagy itt csinálni kölön változót filterrle és beírni JSX-be
-
-  //console.log(colorFilter);
+  const every = testFilter.map((item, index) => {
+    return (
+      <Card
+        key={index}
+        name={item.name}
+        colors={item.colors}
+        types={item.types}
+        rarity={item.rarity}
+        img={item.imageUrl}
+        text={item.text}
+      />
+    );
+  });
 
   if (!isLoaded) {
     return <p>Loading ...</p>;
@@ -65,30 +66,15 @@ const NewFetch = (props) => {
             name="search"
           />
           <div className="checkbox-container">
-            <ColorFilter />
+            <ColorFilter allFilter={allFilter} />
           </div>
 
           <div className="dropdown-container">
-            <Button />
-            <Rarity />
+            <Button allFilter={allFilter} />
+            <Rarity allFilter={allFilter} />
           </div>
 
-          <div className="list-container">
-            {testFilter.map((item) => {
-              return (
-                //! 2. Vagy itt filterezni mindent
-                <Card
-                  key={item.id}
-                  name={item.name}
-                  colors={item.colors}
-                  types={item.types}
-                  rarity={item.rarity}
-                  img={item.imageUrl}
-                  text={item.text}
-                />
-              );
-            })}
-          </div>
+          <div className="list-container">{every}</div>
         </div>
       </div>
     );

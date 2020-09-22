@@ -5,6 +5,7 @@ import {
   TestFilterContext,
   ColorFilterContext,
   ColorsContext,
+  RarityFilterContext,
 } from "./DataContext";
 import ColorFilter from "./ColorFilter";
 import NewFetch from "./NewFetch";
@@ -13,9 +14,8 @@ const Button = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [cards, setCards] = useContext(CardsContext);
   const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
+  const [rarityFilter, setRarityFilter] = useContext(RarityFilterContext);
   const [testFilter, setTestFilter] = useContext(TestFilterContext);
-  const [colorFilter, setColorFilter] = useContext(ColorFilterContext);
-  const [colors, setColors] = useContext(ColorsContext);
 
   const dropDown = (e) => {
     e.preventDefault();
@@ -25,24 +25,12 @@ const Button = (props) => {
   const everyType = cards.map((element) => element.types[0]);
   let types = [...new Set(Object.values(everyType))];
 
-  const typeChange = (e, index) => {
-    const newFilterT = [e];
-    setTypeFilter(newFilterT);
-    console.log(newFilterT);
-
-    const arrayType = [];
-    cards.map((item) => {
-      return item.types[0] === e ? arrayType.push(item) : null;
-    });
-
-    colorFilter.length > 0
-      ? setTestFilter(colors.filter((r) => r.types[0] === e))
-      : setTestFilter(cards.filter((r) => r.types[0] === e));
+  const typeChange = (e) => {
+    const typeArray = cards.filter((item) => item.types[0] === e);
+    setTypeFilter(typeArray);
   };
 
-  const showAllType = () => {
-    setTestFilter(colors);
-  };
+  const showAllType = () => {};
 
   return (
     <div className="dropdown">
@@ -56,7 +44,7 @@ const Button = (props) => {
                 key={index}
                 value={element}
                 index={index}
-                onClick={(e) => typeChange(e.target.value, index)}
+                onClick={(e) => typeChange(e.target.value)}
               >
                 {element}
               </button>

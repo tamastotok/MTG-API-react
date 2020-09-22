@@ -1,19 +1,10 @@
 import React, { useContext } from "react";
-import {
-  CardsContext,
-  TestFilterContext,
-  ColorFilterContext,
-  TypeFilterContext,
-  ColorsContext,
-} from "./DataContext";
+import { CardsContext, TestFilterContext } from "./DataContext";
 
-const ColorFilter = (props) => {
-  const [cards, setCards] = useContext(CardsContext);
+const ColorFilter = () => {
+  const [cards] = useContext(CardsContext);
   const [testFilter, setTestFilter] = useContext(TestFilterContext);
-  const [colorFilter, setColorFilter] = useContext(ColorFilterContext);
-  const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
-  const [colors, setColors] = useContext(ColorsContext);
-
+  let colors = [];
   const everyColor = cards.map((element) => element.colors[0]);
 
   // Remove duplicates and undefined
@@ -23,45 +14,39 @@ const ColorFilter = (props) => {
     })
     .sort();
 
-  const colorChange = (value) => {
-    // Put the colors into an array
-    const currentIndex = colorFilter.indexOf(value);
-    const newFilterC = [...colorFilter];
+  const colorChange = (e) => {
+    const currentIndex = colors.indexOf(e);
+    const colorsArray = [...colors];
     if (currentIndex === -1) {
-      newFilterC.push(value);
+      colorsArray.push(e);
     } else {
-      newFilterC.splice(currentIndex, 1);
+      colorsArray.splice(currentIndex, 1);
     }
-    setColorFilter(newFilterC);
+    colors = colorsArray;
+    const yemen = colors.map((r) =>
+      cards.filter((item) => item.colors[0] === r)
+    );
 
-    // Get all the cards based on the colors what's in the array
-    const arrayColor = [];
-    for (let i = 0; i < newFilterC.length; i++) {
-      cards.map((item) => {
-        return item.colors[0] === newFilterC[i]
-          ? arrayColor.push(item)
-          : arrayColor.filter((r) => r !== item);
-      });
-    }
+    const yeet = [].concat(...Object.values(yemen));
+    //setTestFilter(yeet);
 
-    setColors(arrayColor);
-    arrayColor.length > 0 ? setTestFilter(arrayColor) : setTestFilter(cards);
+    console.log("yeet: ", yeet);
   };
 
   return (
     <React.Fragment>
-      {colorsArray.map((value, index) => {
-        if (value === undefined) {
+      {colorsArray.map((item, index) => {
+        if (item === undefined) {
           return null;
         } else {
           return (
             <div key={index}>
               <input
                 type="checkbox"
-                name={value}
-                onChange={() => colorChange(value, index)}
+                name={item}
+                onChange={(e) => colorChange(e.currentTarget.name)}
               />
-              <label htmlFor={value}>{value}</label>
+              <label htmlFor={item}>{item}</label>
             </div>
           );
         }

@@ -4,7 +4,7 @@ import {
   TypeFilterContext,
   TestFilterContext,
   ColorFilterContext,
-  ColorsContext,
+  RarityFilterContext,
 } from "./DataContext";
 import ColorFilter from "./ColorFilter";
 import NewFetch from "./NewFetch";
@@ -14,8 +14,8 @@ const Rarity = (props) => {
   const [cards, setCards] = useContext(CardsContext);
   const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
   const [testFilter, setTestFilter] = useContext(TestFilterContext);
-  const [colorFilter, setColorFilter] = useContext(ColorFilterContext);
-  const [colors, setColors] = useContext(ColorsContext);
+
+  const [rarityFilter, setRarityFilter] = useContext(RarityFilterContext);
 
   const dropDown = (e) => {
     e.preventDefault();
@@ -25,24 +25,12 @@ const Rarity = (props) => {
   const everyRarity = cards.map((element) => element.rarity);
   let rarities = [...new Set(Object.values(everyRarity))];
 
-  const rarityChange = (e, index) => {
-    const newFilterR = [e];
-    setTypeFilter(newFilterR);
-    console.log(newFilterR);
-
-    const arrayType = [];
-    cards.map((item) => {
-      return item.rarity === e ? arrayType.push(item) : null;
-    });
-
-    colorFilter.length > 0
-      ? setTestFilter(colors.filter((r) => r.rarity === e))
-      : setTestFilter(cards.filter((r) => r.rarity === e));
+  const rarityChange = (e) => {
+    const rarityArray = cards.filter((item) => item.rarity === e);
+    setRarityFilter(rarityArray);
   };
 
-  const showAllRarity = () => {
-    setTestFilter(colors);
-  };
+  const showAllRarity = () => {};
 
   return (
     <div className="dropdown">
@@ -56,7 +44,7 @@ const Rarity = (props) => {
                 key={index}
                 value={element}
                 index={index}
-                onClick={(e) => rarityChange(e.target.value, index)}
+                onClick={(e) => rarityChange(e.target.value)}
               >
                 {element}
               </button>

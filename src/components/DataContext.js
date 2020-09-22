@@ -24,7 +24,7 @@ export const ColorFilterProvider = (props) => {
 
 export const TypeFilterContext = createContext();
 export const TypeFilterProvider = (props) => {
-  const [typeFilter, setTypeFilter] = useState([]);
+  const [typeFilter, setTypeFilter] = useState("");
 
   return (
     <TypeFilterContext.Provider value={[typeFilter, setTypeFilter]}>
@@ -35,7 +35,7 @@ export const TypeFilterProvider = (props) => {
 
 export const RarityFilterContext = createContext();
 export const RarityFilterProvider = (props) => {
-  const [rarityFilter, setRarityFilter] = useState([]);
+  const [rarityFilter, setRarityFilter] = useState("");
 
   return (
     <RarityFilterContext.Provider value={[rarityFilter, setRarityFilter]}>
@@ -52,16 +52,5 @@ export const TestFilterProvider = (props) => {
     <TestFilterContext.Provider value={[testFilter, setTestFilter]}>
       {props.children}
     </TestFilterContext.Provider>
-  );
-};
-
-export const ColorsContext = createContext();
-export const ColorsProvider = (props) => {
-  const [colors, setColors] = useState([]);
-
-  return (
-    <ColorsContext.Provider value={[colors, setColors]}>
-      {props.children}
-    </ColorsContext.Provider>
   );
 };
