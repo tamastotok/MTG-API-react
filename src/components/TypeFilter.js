@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 
-const Rarity = (props) => {
+const TypeFilter = (props) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedRarity, setSelectedRarity] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   const dropDown = (e) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
 
-  const everyRarity = props.cards.map((element) => element.rarity);
-  let rarities = [...new Set(Object.values(everyRarity))];
+  const everyType = props.cards.map((element) => element.types[0]);
+  let types = [...new Set(Object.values(everyType))];
 
-  const showAllRarity = () => {};
+  const showAllType = () => {};
 
   return (
     <div className="dropdown">
       <button onClick={dropDown}>
-        {selectedRarity.length > 0 ? selectedRarity : "Rarity"}
+        {selectedType.length > 0 ? selectedType : "Type"}
       </button>
       {showMenu ? (
         <div className="menu">
-          <button onClick={showAllRarity}>All types</button>
-          {rarities.map((element, index) => {
+          <button onClick={showAllType}>Show all</button>
+          {types.map((element, index) => {
             return (
               <button
                 key={index}
@@ -30,7 +30,7 @@ const Rarity = (props) => {
                 index={index}
                 onClick={(e) => {
                   props.allFilter(e.target.value);
-                  setSelectedRarity(e.target.value);
+                  setSelectedType(e.target.value);
                 }}
               >
                 {element}
@@ -42,4 +42,4 @@ const Rarity = (props) => {
     </div>
   );
 };
-export default Rarity;
+export default TypeFilter;

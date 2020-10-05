@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import ColorFilter from "./ColorFilter";
-import Button from "./Button";
-import Rarity from "./Rarity";
+import TypeFilter from "./TypeFilter";
+import RarityFilter from "./RarityFilter";
 import card from "../card.gif";
 
 // colors[0],types[0],rarity
 
-const NewFetch = (props) => {
+//TODO => searchbar
+//TODO => dropdown menu
+//TODO => write a function to "All types" and "All rarities"
+//TODO => sort by name
+
+const NewFetch = () => {
   const [cards, setCards] = useState([]);
   const [value, setValue] = useState("");
   const [testFilter, setTestFilter] = useState([]);
@@ -29,6 +34,27 @@ const NewFetch = (props) => {
         setIsLoaded(true);
       });
   }, []);
+
+  // Search by name
+  const search = cards
+    .filter((element) => {
+      return element.name.toLowerCase().indexOf(value.toLowerCase()) >= 0;
+    })
+    .map((element) => {
+      return (
+        <Card
+          key={element.id}
+          name={element.name}
+          colors={element.colors}
+          types={element.types}
+          subtypes={element.subtypes}
+          supertypes={element.supertypes}
+          rarity={element.rarity}
+          img={element.imageUrl}
+          text={element.text}
+        />
+      );
+    });
 
   // Get every color, type and rarity from cards
   const everyColor = cards.map((element) => element.colors[0]);
@@ -116,7 +142,7 @@ const NewFetch = (props) => {
   } else {
     return (
       <div>
-        {}
+        {console.log(search)}
         <div className="searchbar">
           <input
             onChange={(e) => setValue(e.target.value)}
@@ -129,24 +155,26 @@ const NewFetch = (props) => {
           </div>
 
           <div className="dropdown-container">
-            <Button allFilter={allFilter} cards={cards} />
-            <Rarity allFilter={allFilter} cards={cards} />
+            <TypeFilter allFilter={allFilter} cards={cards} />
+            <RarityFilter allFilter={allFilter} cards={cards} />
           </div>
 
           <div className="list-container">
-            {testFilter.map((item, index) => {
-              return (
-                <Card
-                  key={index}
-                  name={item.name}
-                  colors={item.colors}
-                  types={item.types}
-                  rarity={item.rarity}
-                  img={item.imageUrl}
-                  text={item.text}
-                />
-              );
-            })}
+            {search
+              ? search
+              : testFilter.map((item, index) => {
+                  return (
+                    <Card
+                      key={index}
+                      name={item.name}
+                      colors={item.colors}
+                      types={item.types}
+                      rarity={item.rarity}
+                      img={item.imageUrl}
+                      text={item.text}
+                    />
+                  );
+                })}
           </div>
         </div>
       </div>
