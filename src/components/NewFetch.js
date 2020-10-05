@@ -7,7 +7,7 @@ import card from "../card.gif";
 
 // colors[0],types[0],rarity
 
-//TODO => sort by color than name
+//TODO => show cards with multiple types
 
 const NewFetch = () => {
   const [cards, setCards] = useState([]);
@@ -176,19 +176,27 @@ const NewFetch = () => {
           <div className="list-container">
             {value
               ? search
-              : testFilter.map((item, index) => {
-                  return (
-                    <Card
-                      key={index}
-                      name={item.name}
-                      colors={item.colors}
-                      types={item.types}
-                      rarity={item.rarity}
-                      img={item.imageUrl}
-                      text={item.text}
-                    />
-                  );
-                })}
+              : testFilter
+                  .sort((a, b) =>
+                    a.colors[0] > b.colors[0]
+                      ? 1
+                      : b.colors[0] > a.colors[0]
+                      ? -1
+                      : 0
+                  )
+                  .map((item, index) => {
+                    return (
+                      <Card
+                        key={index}
+                        name={item.name}
+                        colors={item.colors}
+                        types={item.types}
+                        rarity={item.rarity}
+                        img={item.imageUrl}
+                        text={item.text}
+                      />
+                    );
+                  })}
           </div>
         </div>
       </div>
