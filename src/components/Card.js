@@ -4,9 +4,7 @@ const Card = (props) => {
   return (
     <div
       className={`cards-container ${
-        props.colors[0] !== undefined
-          ? props.colors[0].toLowerCase()
-          : "colorless"
+        !props.colors[0] || !props.img ? "hide" : ""
       }`}
     >
       <h3>{props.name}</h3>

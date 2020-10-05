@@ -1,40 +1,24 @@
-import React, { useState, useContext } from "react";
-import {
-  CardsContext,
-  TypeFilterContext,
-  TestFilterContext,
-  ColorFilterContext,
-  RarityFilterContext,
-} from "./DataContext";
-import ColorFilter from "./ColorFilter";
-import NewFetch from "./NewFetch";
+import React, { useState } from "react";
 
 const Rarity = (props) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [cards, setCards] = useContext(CardsContext);
-  const [typeFilter, setTypeFilter] = useContext(TypeFilterContext);
-  const [testFilter, setTestFilter] = useContext(TestFilterContext);
-
-  const [rarityFilter, setRarityFilter] = useContext(RarityFilterContext);
+  const [selectedRarity, setSelectedRarity] = useState("");
 
   const dropDown = (e) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
 
-  const everyRarity = cards.map((element) => element.rarity);
+  const everyRarity = props.cards.map((element) => element.rarity);
   let rarities = [...new Set(Object.values(everyRarity))];
-
-  const rarityChange = (e) => {
-    const rarityArray = cards.filter((item) => item.rarity === e);
-    setRarityFilter(rarityArray);
-  };
 
   const showAllRarity = () => {};
 
   return (
     <div className="dropdown">
-      <button onClick={dropDown}>Rarity</button>
+      <button onClick={dropDown}>
+        {selectedRarity.length > 0 ? selectedRarity : "Rarity"}
+      </button>
       {showMenu ? (
         <div className="menu">
           <button onClick={showAllRarity}>All types</button>
@@ -44,7 +28,10 @@ const Rarity = (props) => {
                 key={index}
                 value={element}
                 index={index}
-                onClick={(e) => rarityChange(e.target.value)}
+                onClick={(e) => {
+                  props.allFilter(e.target.value);
+                  setSelectedRarity(e.target.value);
+                }}
               >
                 {element}
               </button>
