@@ -9,7 +9,12 @@ const Card = (props) => {
     >
       <h3>{props.name}</h3>
       <p>Color: {props.colors}</p>
-      <p>Type: {props.types}</p>
+      <p>
+        Type:{" "}
+        {props.types.length === 2
+          ? `${props.types[0]} / ${props.types[1]}`
+          : props.types}
+      </p>
       <p>Rarity: {props.rarity}</p>
       <img src={props.img} alt={props.name} />
       <p>{props.text}</p>

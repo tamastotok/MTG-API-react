@@ -9,8 +9,12 @@ const TypeFilter = (props) => {
     setShowMenu(!showMenu);
   };
 
-  const everyType = props.cards.map((element) => element.types[0]);
-  let types = ["All Type", ...new Set(Object.values(everyType))];
+  const everyType = props.cards.map((element) =>
+    element.types.length > 1
+      ? `${element.types[0]} / ${element.types[1]}`
+      : element.types[0]
+  );
+  let types = ["All Type", ...new Set(Object.values(everyType))].sort();
 
   return (
     <div className="dropdown">

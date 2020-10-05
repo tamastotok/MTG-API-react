@@ -7,8 +7,6 @@ import card from "../card.gif";
 
 // colors[0],types[0],rarity
 
-//TODO => show cards with multiple types
-
 const NewFetch = () => {
   const [cards, setCards] = useState([]);
   const [value, setValue] = useState("");
@@ -61,7 +59,11 @@ const NewFetch = () => {
     })
     .sort();
 
-  const everyType = cards.map((element) => element.types[0]);
+  const everyType = cards.map((element) =>
+    element.types.length > 1
+      ? `${element.types[0]} / ${element.types[1]}`
+      : element.types[0]
+  );
   const types = ["All Type", ...new Set(Object.values(everyType))];
 
   const everyRarity = cards.map((element) => element.rarity);
@@ -93,11 +95,25 @@ const NewFetch = () => {
       if (typeEvent && rarityEvent) {
         setTestFilter(
           colorCards.filter(
-            (item) => item.types[0] === typeEvent && item.rarity === rarityEvent
+            (item) =>
+              item.types[0] === typeEvent &&
+              item.types[1] === undefined &&
+              item.rarity === rarityEvent
           )
         );
       } else if (typeEvent && !rarityEvent) {
-        setTestFilter(colorCards.filter((item) => item.types[0] === typeEvent));
+        // Hardcoded
+        if (typeEvent === "Artifact / Creature") {
+          setTestFilter(
+            colorCards.filter((item) => item.types[1] === "Creature")
+          );
+        } else
+          setTestFilter(
+            colorCards.filter(
+              (item) =>
+                item.types[0] === typeEvent && item.types[1] === undefined
+            )
+          );
       } else if (!typeEvent && rarityEvent) {
         setTestFilter(colorCards.filter((item) => item.rarity === rarityEvent));
       } else {
@@ -107,11 +123,23 @@ const NewFetch = () => {
       if (typeEvent && rarityEvent) {
         setTestFilter(
           cards.filter(
-            (item) => item.types[0] === typeEvent && item.rarity === rarityEvent
+            (item) =>
+              item.types[0] === typeEvent &&
+              item.types[1] === undefined &&
+              item.rarity === rarityEvent
           )
         );
       } else if (typeEvent && !rarityEvent) {
-        setTestFilter(cards.filter((item) => item.types[0] === typeEvent));
+        // Hardcoded
+        if (typeEvent === "Artifact / Creature") {
+          setTestFilter(cards.filter((item) => item.types[1] === "Creature"));
+        } else
+          setTestFilter(
+            cards.filter(
+              (item) =>
+                item.types[0] === typeEvent && item.types[1] === undefined
+            )
+          );
       } else if (!typeEvent && rarityEvent) {
         setTestFilter(cards.filter((item) => item.rarity === rarityEvent));
       } else {
@@ -144,7 +172,6 @@ const NewFetch = () => {
     cards.map((item) =>
       item.colors.length === 0 ? item.colors.push("Colorless") : null
     );
-    console.log(cards.filter((item) => item.name === "Composite Golem"));
   }
 
   if (!isLoaded) {
