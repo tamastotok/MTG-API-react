@@ -3,8 +3,8 @@ import React from "react";
 const Card = (props) => {
   return (
     <div
-      className={`cards-container ${
-        !props.colors[0] || !props.img ? "hide" : ""
+      className={`cards-container ${!props.colors[0] ? "colorless" : ""} ${
+        !props.img ? "hide" : ""
       }`}
     >
       <h3>{props.name}</h3>

@@ -10,9 +10,7 @@ const TypeFilter = (props) => {
   };
 
   const everyType = props.cards.map((element) => element.types[0]);
-  let types = [...new Set(Object.values(everyType))];
-
-  const showAllType = () => {};
+  let types = ["All Type", ...new Set(Object.values(everyType))];
 
   return (
     <div className="dropdown">
@@ -21,7 +19,6 @@ const TypeFilter = (props) => {
       </button>
       {showMenu ? (
         <div className="menu">
-          <button onClick={showAllType}>Show all</button>
           {types.map((element, index) => {
             return (
               <button
@@ -31,6 +28,7 @@ const TypeFilter = (props) => {
                 onClick={(e) => {
                   props.allFilter(e.target.value);
                   setSelectedType(e.target.value);
+                  setShowMenu(!showMenu);
                 }}
               >
                 {element}

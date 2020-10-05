@@ -7,10 +7,7 @@ import card from "../card.gif";
 
 // colors[0],types[0],rarity
 
-//TODO => searchbar
-//TODO => dropdown menu
-//TODO => write a function to "All types" and "All rarities"
-//TODO => sort by name
+//TODO => sort by color than name
 
 const NewFetch = () => {
   const [cards, setCards] = useState([]);
@@ -65,10 +62,10 @@ const NewFetch = () => {
     .sort();
 
   const everyType = cards.map((element) => element.types[0]);
-  const types = [...new Set(Object.values(everyType))];
+  const types = ["All Type", ...new Set(Object.values(everyType))];
 
   const everyRarity = cards.map((element) => element.rarity);
-  const rarities = [...new Set(Object.values(everyRarity))];
+  const rarities = ["All Rarity", ...new Set(Object.values(everyRarity))];
 
   useEffect(() => {
     // Filter by color(s)
@@ -81,6 +78,14 @@ const NewFetch = () => {
           )
         )
       );
+    }
+
+    if (typeEvent === "All Type") {
+      setTypeEvent("");
+    }
+
+    if (rarityEvent === "All Rarity") {
+      setRarityEvent("");
     }
 
     // Filter by type and rarity
@@ -124,13 +129,23 @@ const NewFetch = () => {
           : colorEvent.filter((r) => r !== e)
       );
     }
+
     if (types.includes(e)) {
       setTypeEvent(e);
     }
+
     if (rarities.includes(e)) {
       setRarityEvent(e);
     }
   };
+
+  // Give a "colorless" value to every card that doesn't have any color
+  if (isLoaded) {
+    cards.map((item) =>
+      item.colors.length === 0 ? item.colors.push("Colorless") : null
+    );
+    console.log(cards.filter((item) => item.name === "Composite Golem"));
+  }
 
   if (!isLoaded) {
     return (
@@ -142,7 +157,6 @@ const NewFetch = () => {
   } else {
     return (
       <div>
-        {console.log(search)}
         <div className="searchbar">
           <input
             onChange={(e) => setValue(e.target.value)}
@@ -160,7 +174,7 @@ const NewFetch = () => {
           </div>
 
           <div className="list-container">
-            {search
+            {value
               ? search
               : testFilter.map((item, index) => {
                   return (
