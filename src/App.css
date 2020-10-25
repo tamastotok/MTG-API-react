@@ -4,12 +4,17 @@
   box-sizing: border-box;
 }
 
+.App {
+  width: 100%;
+  height: 100vh;
+}
+
 .loading-screen {
   width: 100%;
   position: relative;
 }
 
-.loading-screen p {
+.loading-screen p,h3 {
   width: fit-content;
   margin-left: 50%;
   transform: translate(-50%);
@@ -21,11 +26,11 @@
   transform: translate(-50%);
 }
 
-.list-container {
+.cards-container {
   height: 710px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  row-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
+  row-gap: 10px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -34,15 +39,32 @@
   overflow: scroll;
 }
 
-.cards-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.card img {
+  width: 223px;
+  height: 311px;
 }
 
-.cards img {
-  object-fit: cover;
+.pop-up{
+  border:2px solid red;
+  background-color: grey;
+  color:whitesmoke;
+  position: absolute;
+  top:0;
+  left: 50%;
+  width: 223px;
+  height: fit-content;
+  z-index: 2;
+  display: block;
 }
+
+.searchbar{
+  width: fit-content;
+}
+
+#total-count{
+  width: fit-content;
+}
+
 
 .checkbox-container {
   display: flex;
@@ -58,16 +80,75 @@
 }
 
 .dropdown {
-  margin: 0 20px;
+  margin-right: 60px;
   width: 100px;
 }
 
 .menu {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100px;
+  max-height: 95px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#jump-to-top{
+  border-radius: 50%;
+  position: absolute;
+  bottom:5%;
+  right: 5%;
+  cursor: pointer;
 }
 
 .hide {
   display: none;
+}
+
+.card-details-container {
+  height: 100vh;
+}
+
+.back-button{
+  width: fit-content;
+  float: right;
+  margin-top: 30px;
+  margin-right: 60px;
+}
+
+.content {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 90px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  row-gap: 20px;
+}
+
+.content img {
+  justify-self: center;
+}
+
+table {
+  justify-self: center;
+  border:2px solid gray;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+tbody {
+  width: 100%;
+}
+
+tbody tr {
+  border-bottom: 2px solid gray;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const TypeFilter = (props) => {
+const SubtypeFilter = (props) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedSubtype, setSelectedSubtype] = useState("");
 
   const dropDown = (e) => {
     e.preventDefault();
@@ -14,11 +14,12 @@ const TypeFilter = (props) => {
   return (
     <div className="dropdown">
       <button onClick={dropDown}>
-        {selectedType.length > 0 ? selectedType : "Type"}
+        {selectedSubtype.length > 0 ? selectedSubtype : "Subtype"}
       </button>
       {showMenu ? (
         <div className="menu">
-          {props.types.map((element, index) => {
+          {console.log(props.subtypes.length)}
+          {props.subtypes.map((element, index) => {
             return (
               <button
                 key={index}
@@ -26,7 +27,7 @@ const TypeFilter = (props) => {
                 index={index}
                 onClick={(e) => {
                   props.allFilter(e.target.value);
-                  setSelectedType(e.target.value);
+                  setSelectedSubtype(e.target.value);
                   setShowMenu(!showMenu);
                 }}
               >
@@ -39,4 +40,4 @@ const TypeFilter = (props) => {
     </div>
   );
 };
-export default TypeFilter;
+export default SubtypeFilter;

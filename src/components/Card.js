@@ -1,24 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Card = (props) => {
   return (
-    <div
-      className={`cards-container ${!props.colors[0] ? "colorless" : ""} ${
-        !props.img ? "hide" : ""
-      }`}
-    >
-      <h3>{props.name}</h3>
-      <p>Color: {props.colors}</p>
-      <p>
-        Type:{" "}
-        {props.types.length === 2
-          ? `${props.types[0]} / ${props.types[1]}`
-          : props.types}
-      </p>
-      <p>Rarity: {props.rarity}</p>
-      <img src={props.img} alt={props.name} />
-      <p>{props.text}</p>
+    <div className={props.img ? "card" : "hide"}>
+      <Link to={`/id=${props.id}`}>
+        <img src={props.img} alt={props.name} />
+      </Link>
     </div>
-  );
+  )
 };
 export default Card;

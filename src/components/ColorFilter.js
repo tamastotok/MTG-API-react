@@ -1,16 +1,10 @@
 import React from "react";
 
 const ColorFilter = (props) => {
-  const everyColor = props.cards.map((element) => element.colors[0]);
-  let colorsArray = [...new Set(Object.values(everyColor))]
-    .filter((element) => {
-      return element !== undefined;
-    })
-    .sort();
 
   return (
     <React.Fragment>
-      {colorsArray.map((item, index) => {
+      {props.colors.map((item, index) => {
         if (item === undefined) {
           return null;
         } else {

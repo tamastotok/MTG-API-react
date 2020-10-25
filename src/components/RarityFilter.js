@@ -8,10 +8,6 @@ const RarityFilter = (props) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
-
-  const everyRarity = props.cards.map((element) => element.rarity);
-  let rarities = ["All Rarity", ...new Set(Object.values(everyRarity))];
-
   return (
     <div className="dropdown">
       <button onClick={dropDown}>
@@ -19,7 +15,7 @@ const RarityFilter = (props) => {
       </button>
       {showMenu ? (
         <div className="menu">
-          {rarities.map((element, index) => {
+          {props.rarities.map((element, index) => {
             return (
               <button
                 key={index}
