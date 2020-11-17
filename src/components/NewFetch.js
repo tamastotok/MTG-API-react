@@ -249,7 +249,7 @@ const NewFetch = () => {
 
   // Render
   return (
-    <Router>
+    <div>
       {/*Ide te feeder szar*/}
 
 
@@ -277,7 +277,9 @@ const NewFetch = () => {
           name="exact"
           ref={exactName}
         />
-        <Link to={`/name/${cardName}`}> <button onClick={() => { setIsSearchClicked(true); colorChecked.current.checked = false; setTypeEvent("Any type"); setSubtypeEvent("Any subtype"); setRarityEvent("Any rarity") }}>Search</button></Link>
+        {/* <Link to={`/name/${cardName}`}>  */}
+        <button onClick={() => { setIsSearchClicked(true); colorChecked.current.checked = false; setTypeEvent("Any type"); setSubtypeEvent("Any subtype"); setRarityEvent("Any rarity") }}>Search</button>
+        {/* </Link> */}
       </div>
 
       <h3 id="total-count">Current number of cards: {currentCards}</h3>
@@ -296,16 +298,18 @@ const NewFetch = () => {
           <SubtypeFilter allFilter={allFilter} typeEvent={typeEvent} subtypes={subtypes} />
         }
         <RarityFilter allFilter={allFilter} rarities={rarities} />
-        <Link to={`/filter/c=${colorEvent}&t=${typeEvent}&s=${subtypeEvent}&r=${rarityEvent}`}><button onClick={() => { setIsFilterClicked(true); exactValue.current.value = ""; exactName.current.checked = false }}>Filter</button></Link>
+        {/* <Link to={`/filter/c=${colorEvent}&t=${typeEvent}&s=${subtypeEvent}&r=${rarityEvent}`}> */}
+        <button onClick={() => { setIsFilterClicked(true); exactValue.current.value = ""; exactName.current.checked = false }}>Filter</button>
+        {/* </Link> */}
       </div>
 
-      <Route path={["/name/:name", "/filter/:filter"]}>
-        <Filter isLoaded={isLoaded} handleScroll={handleScroll} toScrollTop={toScrollTop} value={value} scrollPosition={scrollPosition} jumpToTop={jumpToTop} testFilter={testFilter} />
-      </Route>
+      {/* <Route path={["/name/:name", "/filter/:filter"]}> */}
+      <Filter isLoaded={isLoaded} handleScroll={handleScroll} toScrollTop={toScrollTop} value={value} scrollPosition={scrollPosition} jumpToTop={jumpToTop} testFilter={testFilter} />
+      {/* </Route> */}
 
 
 
-    </Router>
+    </div>
   );
 
 };
