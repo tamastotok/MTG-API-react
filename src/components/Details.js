@@ -14,22 +14,14 @@ const Details = ({ match }) => {
 
    console.log("clicked")
 
-   /*useEffect(() => {
+   useEffect(() => {
+      searchCardsbyId(match.params.id.replace("id=", "")).then((dataId) => {
+         console.log(dataId)
+         setCardDetail(dataId.card)
+         setIsLoaded(true)
+      });
 
-      if (props.isClicked) {
-
-         console.log(match)
-
-
-         searchCardsbyId(match.params.id.replace("id=", "")).then((dataId) => {
-            console.log(dataId)
-            setCardDetail(dataId.card)
-            setIsLoaded(true)
-         });
-      }
-
-
-   }, [])*/
+   }, [])
 
 
 
