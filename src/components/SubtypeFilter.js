@@ -10,10 +10,9 @@ const SubtypeFilter = (props) => {
   };
 
 
-
   return (
     <div className="dropdown">
-      <button onClick={dropDown}>
+      <button className="button-active" onClick={dropDown}>
         {selectedSubtype.length > 0 ? selectedSubtype : "Subtype"}
       </button>
       {showMenu ? (

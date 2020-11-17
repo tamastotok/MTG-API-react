@@ -1,6 +1,6 @@
-//   Types and Subtypes
+//   Subtypes
 export const getTypes = async (opt) => {
-     let response = await fetch(`https://api.magicthegathering.io/v1/${opt}`)
+     let response = await fetch(`https://api.magicthegathering.io/v1/cards?types=${opt}`)
           .catch(err => console.error(err));
      let types = await response.json();
      return types;
@@ -17,34 +17,24 @@ export const getAllCards = async (color, type, subtype, rarity, page) => {
      return allCardsData;
 }
 
-//   Search
-export const searchCards = async (name, page) => {
-     let response = await fetch(`https://api.magicthegathering.io/v1/cards?name=${name}&page=${page}`)
-          .catch(err => console.error(err));
-     let searchCardsData = {
-          body: await response.json(),
-          header: response.headers.get("Total-Count")
-     }
-     return searchCardsData;
-}
-
-
-//   Search by ID
-export const getCardByID = async (id) => {
+//   Search by id
+export const searchCardsbyId = async (id) => {
      let response = await fetch(`https://api.magicthegathering.io/v1/cards/${id}`)
           .catch(err => console.error(err));
-     let details = await response.json();
+     let dataId = await response.json();
 
-     return details;
+
+     return dataId;
 }
-
 
 
 //   Search by Name
 export const getCardByName = async (name) => {
-     let response = await fetch(`https://api.scryfall.com/cards/named?exact=${name}`)
+     let response = await fetch(`https://api.magicthegathering.io/v1/cards?name=${name}`)
           .catch(err => console.error(err));
-     let details = await response.json();
-
-     return details;
+     let nameData = {
+          body: await response.json(),
+          header: response.headers.get("Total-Count")
+     }
+     return nameData;
 }

@@ -8,9 +8,11 @@ const RarityFilter = (props) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
+
+
   return (
     <div className="dropdown">
-      <button onClick={dropDown}>
+      <button className="button-active" onClick={dropDown}>
         {selectedRarity.length > 0 ? selectedRarity : "Rarity"}
       </button>
       {showMenu ? (

@@ -59,6 +59,10 @@
 
 .searchbar{
   width: fit-content;
+  display: flex;
+}
+.searchbar p {
+  margin-right: 10px;
 }
 
 #total-count{
@@ -81,17 +85,75 @@
 
 .dropdown {
   margin-right: 60px;
-  width: 100px;
+  width: 120px;
+}
+
+.button-active{
+  width: 120px;
+  height: 25px;
+  background: none;
+  border:1px solid transparent;
+  border-bottom: 1px solid lightskyblue;
+  margin-bottom: 3px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-active:hover{
+  border-bottom: 2px solid lightskyblue;
+  height: 26px;
+  margin-bottom: 2px;
+}
+
+.button-active::after{
+content: "";
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 6px 5px 0 5px;
+border-color: lightskyblue transparent transparent transparent;
+-webkit-transform: rotate(360deg);
 }
 
 .menu {
-  display: flex;
-  flex-direction: column;
-  width: 100px;
-  max-height: 95px;
+  width: 120px;
+  max-height:125px ;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.menu button {
+  outline: none;
+  border: none;
+  background: none;
+  width: 120px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #b7b7b7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: lightskyblue;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(25, 112, 167);
+}
+
 
 #jump-to-top{
   border-radius: 50%;

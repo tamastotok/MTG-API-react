@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import Details from "./components/Details";
 import NewFetch from "./components/NewFetch";
-import Details from "./components/Details"
 
 function App() {
   return (
-    <Router>
+    <Router >
       <div className="App">
         <Switch>
-          <Route path="/" exact component={NewFetch} />
-          <Route path="/:id" exact component={Details} />
+          <Route exact path="/" component={NewFetch} />
+          <Route path="/cardID/:id" component={Details} />
         </Switch>
       </div>
     </Router>

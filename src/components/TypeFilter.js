@@ -10,10 +10,9 @@ const TypeFilter = (props) => {
   };
 
 
-
   return (
     <div className="dropdown">
-      <button onClick={dropDown}>
+      <button className="button-active" onClick={dropDown}>
         {selectedType.length > 0 ? selectedType : "Type"}
       </button>
       {showMenu ? (
