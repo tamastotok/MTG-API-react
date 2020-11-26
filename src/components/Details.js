@@ -1,18 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react'
-import card from "../card.gif"
-import { searchCardsbyId } from './API';
+import React, { useState, useEffect } from 'react'
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
-
+import { searchCardsbyId } from './API';
+import card from "../card.gif"
 
 
 const Details = ({ match }) => {
+   const cardName = useSelector(state => state.cardName)
+   const colorEvent = useSelector(state => state.colors)
+   const typeEvent = useSelector(state => state.type)
+   const rarityEvent = useSelector(state => state.rarity)
+
+   const url = cardName ? `/name/${cardName}` : `/cards/q?c=${colorEvent}&t=${typeEvent}&r=${rarityEvent}`
+
    const [cardDetail, setCardDetail] = useState([])
    const [isLoaded, setIsLoaded] = useState(false);
 
-   const isFirstRender = useRef(true);
-
-
-   console.log("clicked")
 
    useEffect(() => {
       searchCardsbyId(match.params.id.replace("id=", "")).then((dataId) => {
@@ -20,62 +23,60 @@ const Details = ({ match }) => {
          setCardDetail(dataId.card)
          setIsLoaded(true)
       });
-
    }, [])
 
 
+   const { imageUrl, name, colors, types, subtypes, rarity, set, setName, power, toughness, text, flavor } = cardDetail
+
 
    return (
-
       <React.Fragment>
-         <h3>Detail, Small indie company, please be patient!</h3>
-
          {!isLoaded ?
             <div className="loading-screen">
-
+               <h3>Loading</h3>
                <img src={card} alt={"card-animation"} />
             </div>
             :
             <div className="card-details-container">
-               <Link to={`/`}>
-                  <h4 className="back-button">BACK</h4>
+               <Link to={url}>
+                  <h3 className="back-button">BACK</h3>
                </Link>
                <div className="content">
-                  <img src={cardDetail.imageUrl} alt={cardDetail.name} />
+                  <img src={imageUrl} alt={name} />
                   <table>
                      <tbody>
                         <tr>
                            <th>Name:</th>
-                           <td>{cardDetail.name}</td>
+                           <td>{name}</td>
                         </tr>
                         <tr>
                            <th>Colors:</th>
-                           <td>{cardDetail.colors}</td>
+                           <td>{colors}</td>
                         </tr>
                         <tr>
                            <th>Types:</th>
-                           <td>{cardDetail.types}</td>
+                           <td>{types}</td>
                         </tr>
                         <tr>
                            <th>Subtypes:</th>
-                           <td>{cardDetail.subtypes}</td>
+                           <td>{subtypes}</td>
                         </tr>
                         <tr>
                            <th>Rarity:</th>
-                           <td>{cardDetail.rarity}</td>
+                           <td>{rarity}</td>
                         </tr>
                         <tr>
                            <th>Set:</th>
-                           <td>{cardDetail.set} / {cardDetail.setName}</td>
+                           <td>{set} / {setName}</td>
                         </tr>
                         <tr>
                            <th>Stats:</th>
-                           <td>{cardDetail.power} / {cardDetail.toughness}</td>
+                           <td>{power} / {toughness}</td>
                         </tr>
                      </tbody>
                      <tfoot>
-                        <tr><td>{cardDetail.text}</td></tr>
-                        <tr><td>{cardDetail.flavor}</td></tr>
+                        <tr><td>{text}</td></tr>
+                        <tr><td><em>{flavor}</em></td></tr>
                      </tfoot>
                   </table>
                </div>

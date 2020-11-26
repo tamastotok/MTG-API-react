@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import placeholder from "../placeholder.png"
 
 const Card = (props) => {
+  const { img, id, name } = props
+
+
   return (
-    <div className={props.img ? "card" : "hide"}>
-      <Link to={`/cardID/${props.id}`} >
-        <img src={props.img} alt={props.name} />
+    <div className="card">
+      <Link to={`/cardID/${id}`} >
+        <img src={img ? img : placeholder} alt={name} />
       </Link>
     </div>
   )

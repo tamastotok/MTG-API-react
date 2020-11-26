@@ -9,25 +9,27 @@
   height: 100vh;
 }
 
+a{
+  height: fit-content;
+}
+
 .loading-screen {
-  width: 100%;
-  position: relative;
-}
-
-.loading-screen p,h3 {
-  width: fit-content;
-  margin-left: 50%;
-  transform: translate(-50%);
-}
-
-.loading-screen img {
-  width: fit-content;
-  margin-left: 50%;
-  transform: translate(-50%);
+  width: 60%;
+  height: fit-content;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .cards-container {
-  height: 710px;
+  height: 650px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
   row-gap: 10px;
@@ -36,12 +38,17 @@
   left: 0;
   right: 0;
   margin: auto;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .card img {
   width: 223px;
   height: 311px;
+}
+
+.hide {
+  display: none;
 }
 
 .pop-up{
@@ -60,13 +67,28 @@
 .searchbar{
   width: fit-content;
   display: flex;
+  align-items: center;
+  margin: 20px 0;
 }
 .searchbar p {
   margin-right: 10px;
 }
+.searchbar input[type=text],
+.searchbar input[type=checkbox]{
+  margin-right: 20px;
+}
+
+.searchbar label {
+  margin: 0 5px 0 10px;
+}
 
 #total-count{
   width: fit-content;
+}
+
+
+.color-checkbox-container{
+  display: flex;
 }
 
 
@@ -136,7 +158,7 @@ border-color: lightskyblue transparent transparent transparent;
 
 /* width */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
 
 /* Track */
@@ -154,18 +176,15 @@ border-color: lightskyblue transparent transparent transparent;
   background: rgb(25, 112, 167);
 }
 
-
 #jump-to-top{
   border-radius: 50%;
   position: absolute;
   bottom:5%;
   right: 5%;
   cursor: pointer;
+  background-color: lightskyblue;
 }
 
-.hide {
-  display: none;
-}
 
 .card-details-container {
   height: 100vh;
@@ -176,6 +195,10 @@ border-color: lightskyblue transparent transparent transparent;
   float: right;
   margin-top: 30px;
   margin-right: 60px;
+  color:lightskyblue
+}
+.back-button:hover{
+  color: rgb(25, 112, 167);
 }
 
 .content {

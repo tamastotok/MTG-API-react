@@ -1,73 +1,47 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom"
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { selectColors } from "../actions/colors"
+import { colorsCheckBox } from "../actions/colorsCheckBox";
 
 
-const ColorFilter = (props) => {
-   //let history = useHistory();
+const ColorFilter = () => {
+   const filterClicked = useSelector(state => state.filterButton)
+   const colorIndex = useSelector(state => state.colorsCheckBox)
+   const dispatch = useDispatch();
 
-   //   const isChecked = useRef([]);
-   const [checkIndex, setCheckIndex] = useState([])
-   const boxes = document.querySelectorAll(".color-checkbox");
-   const [eventArray, setEventArray] = useState([])
+   const everyColor = ["Black", "Blue", "Green", "Red", "White"];
+   const colorsParentRef = useRef();
 
-   const handleChange = (e, index) => {
-      setEventArray(prev => prev.includes(e) ? prev.filter(r => r !== e) : [...prev, e])
-      //isChecked.current.checked = true
-      setCheckIndex(prev => prev.includes(index) ? prev.filter(r => r !== index) : [...prev, index].sort())
 
+   const handleClick = (e) => {
+      dispatch(selectColors(e.currentTarget.name))
+      dispatch(colorsCheckBox(e.currentTarget.id))
    }
 
-   /*useEffect(() => {
-
-      if (eventArray.length > 0) {
-         history.push(`/filter?c=${eventArray}`)
-      }
-
-   }, [eventArray])*/
-
 
    useEffect(() => {
-      const indexData = JSON.parse(sessionStorage.getItem("checkIndex"))
-      setCheckIndex(indexData ? indexData : [])
-   }, [])
-
-   useEffect(() => {
-      sessionStorage.setItem("checkIndex", JSON.stringify(checkIndex))
-   }, [checkIndex])
-
-
-   //console.log(boxes[checkIndex])
-
-   /*if (window.performance) {
-      if (PerformanceNavigation.TYPE_RELOAD === 1 && checkIndex.length > 0) {
-         for (let i of checkIndex) {
-            boxes[i].checked = true
-         }
-      }
-   }*/
+      colorIndex.map(i =>
+         colorsParentRef.current.children[i].children[0].checked = true
+      )
+   }, [filterClicked])
 
 
    return (
-      <React.Fragment>
-         {props.colors.map((item, index) => {
+      <div className="color-checkbox-container" ref={colorsParentRef}>
+         {everyColor.map((item, index) => {
             return (
-               <div key={index}>
-
-                  <input className="color-checkbox"
+               <div key={index} className="color-checkbox">
+                  <input
                      id={index}
                      type="checkbox"
                      name={item}
-                     //                   ref={isChecked}
-                     //checked={isChecked}
-                     ref={props.colorChecked}
-                     onChange={(e) => { props.allFilter(e.currentTarget.name); /*handleChange(e.currentTarget.name, index) */ }}
+                     onClick={handleClick}
                   />
-
                   <label htmlFor={item}>{item}</label>
                </div>
             );
          })}
-      </React.Fragment>
+      </div>
    );
 };
 

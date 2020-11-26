@@ -1,14 +1,6 @@
-//   Subtypes
-export const getTypes = async (opt) => {
-     let response = await fetch(`https://api.magicthegathering.io/v1/cards?types=${opt}`)
-          .catch(err => console.error(err));
-     let types = await response.json();
-     return types;
-}
-
 //   All cards/filter/infinite scroll
-export const getAllCards = async (color, type, subtype, rarity, page) => {
-     let response = await fetch(`https://api.magicthegathering.io/v1/cards?colors=${color}&types=${type}&subtypes=${subtype}&rarity=${rarity}&page=${page}`)
+export const getAllCards = async (color, type, rarity, page) => {
+     let response = await fetch(`https://api.magicthegathering.io/v1/cards?colors=${color}&types=${type}&rarity=${rarity}&page=${page}`)
           .catch(err => console.error(err));
      let allCardsData = {
           body: await response.json(),
@@ -22,8 +14,6 @@ export const searchCardsbyId = async (id) => {
      let response = await fetch(`https://api.magicthegathering.io/v1/cards/${id}`)
           .catch(err => console.error(err));
      let dataId = await response.json();
-
-
      return dataId;
 }
 

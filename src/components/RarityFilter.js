@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { selectRarity } from "../actions/rarity"
 
-const RarityFilter = (props) => {
+const RarityFilter = () => {
+  const selectedRarity = useSelector(state => state.rarity)
+  const dispatch = useDispatch();
+
+  const rarities = ["Any rarity", "Land", "Common", "Uncommon", "Rare", "Mythic"];
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedRarity, setSelectedRarity] = useState("");
+
 
   const dropDown = (e) => {
     e.preventDefault();
@@ -10,24 +16,25 @@ const RarityFilter = (props) => {
   };
 
 
+  const handleClick = (e) => {
+    dispatch(selectRarity(e.target.value))
+    setShowMenu(!showMenu);
+  }
+
+
   return (
     <div className="dropdown">
       <button className="button-active" onClick={dropDown}>
-        {selectedRarity.length > 0 ? selectedRarity : "Rarity"}
+        {selectedRarity ? selectedRarity : "Rarity"}
       </button>
       {showMenu ? (
         <div className="menu">
-          {props.rarities.map((element, index) => {
+          {rarities.map((element, index) => {
             return (
               <button
                 key={index}
                 value={element}
-                index={index}
-                onClick={(e) => {
-                  props.allFilter(e.target.value);
-                  setSelectedRarity(e.target.value);
-                  setShowMenu(!showMenu);
-                }}
+                onClick={handleClick}
               >
                 {element}
               </button>
