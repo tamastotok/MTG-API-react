@@ -28,6 +28,15 @@ a{
   justify-content: center;
 }
 
+.loading-text{
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
 .cards-container {
   height: 650px;
   display: grid;

@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { selectColors } from "../actions/colors"
 import { colorsCheckBox } from "../actions/colorsCheckBox";
+import { resetColorsCheckBox } from '../actions/colorsCheckBox'
 
 
 const ColorFilter = () => {
    const filterClicked = useSelector(state => state.filterButton)
+   const searchClicked = useSelector(state => state.searchButton)
    const colorIndex = useSelector(state => state.colorsCheckBox)
    const dispatch = useDispatch();
 
@@ -24,6 +26,13 @@ const ColorFilter = () => {
          colorsParentRef.current.children[i].children[0].checked = true
       )
    }, [filterClicked])
+
+   useEffect(() => {
+      colorIndex.map(i =>
+         colorsParentRef.current.children[i].children[0].checked = false
+      )
+      dispatch(resetColorsCheckBox())
+   }, [searchClicked])
 
 
    return (

@@ -7,6 +7,8 @@ const colorsReducer = (state = [], action) => {
                else {
                     return [...state, action.payload].sort()
                }
+          case "RESET_COLOR":
+               return []
           default:
                return state;
      }

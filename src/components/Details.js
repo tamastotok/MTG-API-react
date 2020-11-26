@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 import { searchCardsbyId } from './API';
-import card from "../card.gif"
+import card from "./../images/card.gif"
 
 
 const Details = ({ match }) => {
@@ -19,7 +19,6 @@ const Details = ({ match }) => {
 
    useEffect(() => {
       searchCardsbyId(match.params.id.replace("id=", "")).then((dataId) => {
-         console.log(dataId)
          setCardDetail(dataId.card)
          setIsLoaded(true)
       });

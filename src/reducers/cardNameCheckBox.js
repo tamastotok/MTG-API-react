@@ -1,7 +1,7 @@
 const cardNameCheckBoxReducer = (state = false, action) => {
      switch (action.type) {
           case "CARDNAME_CHECKBOX_CHECKED":
-               return !state
+               return action.payload
           default:
                return state
      }

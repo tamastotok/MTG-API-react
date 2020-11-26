@@ -7,6 +7,8 @@ const colorsCheckBoxReducer = (state = [], action) => {
                else {
                     return [...state, action.payload].sort()
                }
+          case "COLORS_CHECKBOX_RESET":
+               return []
           default:
                return state
      }

@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
-import card from "../card.gif";
-import arrow from "../arrow.png";
+import card from "./../images/card.gif";
+import arrow from "./../images/arrow.png";
 
 
 const Filter = (props) => {

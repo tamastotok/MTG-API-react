@@ -4,3 +4,9 @@ export const colorsCheckBox = (index) => {
           payload: index
      }
 }
+
+export const resetColorsCheckBox = () => {
+     return {
+          type: "COLORS_CHECKBOX_RESET"
+     }
+}

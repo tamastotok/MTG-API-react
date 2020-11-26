@@ -11,7 +11,7 @@ import { setSearchPage } from "./actions/searchPage"
 import { setFilterClicked } from "./actions/filterClicked"
 import { setSearchClicked } from "./actions/searchClicked";
 
-//! commit!
+//TODO  =>  refresh page doesn't work
 //*  DOCS: https://docs.magicthegathering.io
 
 //* Tested:
@@ -63,6 +63,7 @@ function App() {
         getCardByName(`"${cardName}"`).then(nameData => {
           setTestFilter(nameData.body.cards)
           setIsLoaded(true)
+          dispatch(setSearchClicked(false))
         })
       } else {
         // Partial name match
@@ -75,7 +76,7 @@ function App() {
           setRemain((100 - (nameData.header % 100)) / 100)
 
           //  Render cards depends on scroll position
-          if (page === 1 && toScrollTop.current) {
+          if (searchPage === 1 && toScrollTop.current) {
             window.scrollTo({
               behavior: "smooth",
               top: toScrollTop.current.scrollTo(0, 0)
@@ -128,7 +129,6 @@ function App() {
   let remainTotalCountSum = remain + totalCount
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e;
-    console.log(scrollTop)
     setScrollPosition(scrollTop)
     if (scrollHeight - scrollTop === clientHeight) {
       if (cardName.length > 0) {

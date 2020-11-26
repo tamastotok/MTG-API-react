@@ -12,6 +12,7 @@ import { setSearchClicked } from "../actions/searchClicked"
 import { cardNameCheckBox } from "../actions/cardNameCheckBox"
 import { setPageReset } from '../actions/page'
 import { setSearchPageReset } from '../actions/searchPage'
+import { resetColors } from '../actions/colors'
 
 
 const Header = () => {
@@ -26,7 +27,9 @@ const Header = () => {
 
      const handleSearchClick = () => {
           dispatch(setSearchClicked(true));
+          dispatch(setPageReset());
           dispatch(setSearchPageReset());
+          dispatch(resetColors());
           dispatch(selectType("Any type"));
           dispatch(selectRarity("Any rarity"));
      }
@@ -35,7 +38,9 @@ const Header = () => {
      const handleFilterClick = () => {
           dispatch(setFilterClicked(true));
           dispatch(setPageReset());
+          dispatch(setSearchPageReset());
           dispatch(cardName(""))
+          dispatch(cardNameCheckBox(false))
           exactCardNameRef.current.value = ""
      }
 
@@ -53,7 +58,7 @@ const Header = () => {
                     />
                     <label htmlFor="exact">Exact name:</label>
                     <input className="exact-name"
-                         onClick={() => dispatch(cardNameCheckBox())}
+                         onClick={() => dispatch(cardNameCheckBox(true))}
                          type="checkbox"
                          name="exact"
                          checked={isChecked}

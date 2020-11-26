@@ -4,3 +4,9 @@ export const selectColors = (color) => {
           payload: color
      }
 }
+
+export const resetColors = () => {
+     return {
+          type: "RESET_COLOR"
+     }
+}
