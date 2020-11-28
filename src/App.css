@@ -28,14 +28,12 @@ a{
   justify-content: center;
 }
 
-.loading-text{
+.counter{
   width: fit-content;
-  position: absolute;
   left: 0;
   right: 0;
   margin: auto;
 }
-
 
 .cards-container {
   height: 650px;
@@ -71,6 +69,10 @@ a{
   height: fit-content;
   z-index: 2;
   display: block;
+}
+
+.alert{
+  color:red
 }
 
 .searchbar{
@@ -145,7 +147,7 @@ height: 0;
 border-style: solid;
 border-width: 6px 5px 0 5px;
 border-color: lightskyblue transparent transparent transparent;
--webkit-transform: rotate(360deg);
+transform: rotate(360deg);
 }
 
 .menu {

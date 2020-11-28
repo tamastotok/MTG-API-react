@@ -4,3 +4,9 @@ export const cardNameCheckBox = (bool) => {
           payload: bool
      }
 }
+
+export const cardNameCheckBoxOppositeState = () => {
+     return {
+          type: "CARDNAME_CHECKBOX_OPPOSITE_STATE"
+     }
+}

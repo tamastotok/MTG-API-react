@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ColorFilter from "./ColorFilter"
 import TypeFilter from "./TypeFilter"
@@ -6,10 +6,10 @@ import RarityFilter from "./RarityFilter"
 import { useSelector, useDispatch } from "react-redux"
 import { selectType } from "../actions/type"
 import { selectRarity } from "../actions/rarity"
-import { cardName } from "../actions/cardName"
+import { setCardName } from "../actions/cardName"
 import { setFilterClicked } from "../actions/filterClicked"
 import { setSearchClicked } from "../actions/searchClicked"
-import { cardNameCheckBox } from "../actions/cardNameCheckBox"
+import { cardNameCheckBox, cardNameCheckBoxOppositeState } from "../actions/cardNameCheckBox"
 import { setPageReset } from '../actions/page'
 import { setSearchPageReset } from '../actions/searchPage'
 import { resetColors } from '../actions/colors'
@@ -20,12 +20,31 @@ const Header = () => {
      const typeEvent = useSelector(state => state.type)
      const rarityEvent = useSelector(state => state.rarity)
      const isChecked = useSelector(state => state.cardNameCheckBox)
+     const cardName = useSelector(state => state.cardName)
      const dispatch = useDispatch()
 
      const exactCardNameRef = useRef();
 
+     useEffect(() => {
+          if (exactCardNameRef.current && cardName) {
+               exactCardNameRef.current.value = cardName
+          }
+     }, [])
+
+     const exactCardNameCheckBoxRef = useRef();
+     if (exactCardNameCheckBoxRef.current) {
+          exactCardNameCheckBoxRef.current.checked = isChecked
+     }
 
      const handleSearchClick = () => {
+          if (!exactCardNameRef.current.value) {
+               exactCardNameRef.current.value = "Search is empty!"
+               exactCardNameRef.current.className = "alert"
+               setTimeout(() => {
+                    exactCardNameRef.current.value = ""
+                    exactCardNameRef.current.className = ""
+               }, 1500)
+          }
           dispatch(setSearchClicked(true));
           dispatch(setPageReset());
           dispatch(setSearchPageReset());
@@ -39,7 +58,7 @@ const Header = () => {
           dispatch(setFilterClicked(true));
           dispatch(setPageReset());
           dispatch(setSearchPageReset());
-          dispatch(cardName(""))
+          dispatch(setCardName(""))
           dispatch(cardNameCheckBox(false))
           exactCardNameRef.current.value = ""
      }
@@ -50,7 +69,7 @@ const Header = () => {
                <div className="searchbar">
                     <p>Search by name:</p>
                     <input
-                         onChange={(e) => dispatch(cardName(e.target.value))}
+                         onChange={(e) => dispatch(setCardName(e.target.value))}
                          type="text"
                          placeholder="Search.."
                          name="search"
@@ -58,12 +77,12 @@ const Header = () => {
                     />
                     <label htmlFor="exact">Exact name:</label>
                     <input className="exact-name"
-                         onClick={() => dispatch(cardNameCheckBox(true))}
+                         onClick={() => dispatch(cardNameCheckBoxOppositeState())}
                          type="checkbox"
                          name="exact"
-                         checked={isChecked}
+                         ref={exactCardNameCheckBoxRef}
                     />
-                    <Link to={`/name/${exactCardNameRef.current ? exactCardNameRef.current.value : ""}`}>
+                    <Link to={exactCardNameRef.current ? `/name/${exactCardNameRef.current.value}` : "/"}>
                          <button onClick={handleSearchClick}>Search</button>
                     </Link>
                </div>

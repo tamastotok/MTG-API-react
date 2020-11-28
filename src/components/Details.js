@@ -24,7 +24,6 @@ const Details = ({ match }) => {
       });
    }, [])
 
-
    const { imageUrl, name, colors, types, subtypes, rarity, set, setName, power, toughness, text, flavor } = cardDetail
 
 
