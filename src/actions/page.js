@@ -9,5 +9,3 @@ export const setPageReset = () => {
           type: "PAGE_NUMBER_RESET"
      }
 }
-
-

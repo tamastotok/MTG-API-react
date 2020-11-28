@@ -81,9 +81,11 @@ a{
   align-items: center;
   margin: 20px 0;
 }
+
 .searchbar p {
   margin-right: 10px;
 }
+
 .searchbar input[type=text],
 .searchbar input[type=checkbox]{
   margin-right: 20px;
@@ -97,11 +99,9 @@ a{
   width: fit-content;
 }
 
-
 .color-checkbox-container{
   display: flex;
 }
-
 
 .checkbox-container {
   display: flex;
@@ -195,7 +195,6 @@ transform: rotate(360deg);
   cursor: pointer;
   background-color: lightskyblue;
 }
-
 
 .card-details-container {
   height: 100vh;
