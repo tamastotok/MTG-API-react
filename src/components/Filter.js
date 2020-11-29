@@ -83,7 +83,7 @@ const Filter = (props) => {
             <div onScroll={(e) => handleScroll(e.currentTarget)} ref={toScrollTop} className="cards-container">
                {testFilter.map((item, index) => {
                   return (
-                     <Card key={index} id={item.id} img={item.imageUrl} text={item.text} name={item.name} />
+                     <Card key={index} id={item.id} img={item.imageUrl} name={item.name} />
                   )
                })}
             </div>
