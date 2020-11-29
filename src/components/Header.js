@@ -26,15 +26,17 @@ const Header = () => {
      const exactCardNameRef = useRef();
 
      useEffect(() => {
-          if (exactCardNameRef.current && cardName) {
+          if (exactCardNameRef.current) {
                exactCardNameRef.current.value = cardName
           }
-     }, [])
+     }, [cardName])
 
      const exactCardNameCheckBoxRef = useRef();
-     if (exactCardNameCheckBoxRef.current) {
-          exactCardNameCheckBoxRef.current.checked = isChecked
-     }
+     useEffect(() => {
+          if (exactCardNameCheckBoxRef.current) {
+               exactCardNameCheckBoxRef.current.checked = isChecked
+          }
+     })
 
      const handleSearchClick = () => {
           if (!exactCardNameRef.current.value) {
