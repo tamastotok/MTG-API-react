@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux"
-import { getAllCards, getCardByName } from "./components/API"
-import Details from "./components/Details";
-import Filter from "./components/Filter";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCards } from "./components/API";
+import { setIsClicked } from "./state_management/actions/isClicked";
+import { setStatus } from "./state_management/actions/statusMessage";
 import Header from "./components/Header";
+import Deck from "./components/Deck";
+import Details from "./components/Details";
 import "./App.css";
-import { setFilterClicked } from "./actions/filterClicked"
-import { setSearchClicked } from "./actions/searchClicked";
-import { selectColors } from "./actions/colors"
-import { colorsCheckBox } from "./actions/colorsCheckBox"
-import { selectType } from "./actions/type"
-import { selectRarity } from "./actions/rarity"
-import { setPageReset } from "./actions/page"
-import { setCardName } from "./actions/cardName"
-import { cardNameCheckBox } from "./actions/cardNameCheckBox"
-import { setSearchPageReset } from "./actions/searchPage"
 
-
-//*  API: https://docs.magicthegathering.io
+//*   API:              https://docs.magicthegathering.io
+//*   Javascript SDK:   https://github.com/MagicTheGathering/mtg-sdk-javascript
+//*   Typescript SDK:   https://github.com/MagicTheGathering/mtg-sdk-typescript
 
 //* Tested:
 //* Chrome  87.0.4280.66    64bit
@@ -28,181 +21,119 @@ import { setSearchPageReset } from "./actions/searchPage"
 
 // scrollTo(0,0) doesn't work on Safari
 
+const App = () => {
+   const colors = useSelector((state) => state.colors);
+   const type = useSelector((state) => state.type);
+   const rarity = useSelector((state) => state.rarity);
+   const page = useSelector((state) => state.page);
+   const cardName = useSelector((state) => state.cardName);
 
-function App() {
-    //  Redux:
-    const colorEvent = useSelector(state => state.colors)
-    const typeEvent = useSelector(state => state.type)
-    const rarityEvent = useSelector(state => state.rarity)
-    const page = useSelector(state => state.page)
-    const searchPage = useSelector(state => state.searchPage)
-    const filterClicked = useSelector(state => state.filterButton)
-    const searchClicked = useSelector(state => state.searchButton)
-    const cardName = useSelector(state => state.cardName)
-    const isChecked = useSelector(state => state.cardNameCheckBox)
-    const colorIsChecked = useSelector(state => state.colorsCheckBox)
-    const dispatch = useDispatch()
+   const isClicked = useSelector((state) => state.isClicked);
+   const statusMessage = useSelector((state) => state.statusMessage);
 
-    // Cards:
-    const [testFilter, setTestFilter] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
+   const dispatch = useDispatch();
+   let history = useHistory();
 
-    // Pagination
-    const [totalCount, setTotalCount] = useState(0);
-    const [remain, setRemain] = useState(0);
+   // Cards:
+   const [cardData, setCardData] = useState([]);
 
-    // Show current number of cards (for testing)
-    const [currentCards, setCurrentCards] = useState(0)
-    //----------
+   // Reset everything after refresh
+   useEffect(() => {
+      history.push("/");
+   }, [history]);
 
+   // Object for history.push
+   const urlParams = {
+      colorsUrl: `colors-${colors};`,
+      typeUrl: `type-${type};`,
+      rarityUrl: `rarity-${rarity};`,
+      nameUrl: `name-${cardName};`,
+   };
+   // Delete empty keys from urlParams
+   const deleteUrlParams = (obj) => {
+      for (let key in obj) {
+         if (
+            obj[key] === "colors-;" ||
+            obj[key].includes("Any type") ||
+            obj[key].includes("Any rarity") ||
+            obj[key] === "name-;"
+         ) {
+            delete obj[key];
+         }
+      }
+      return obj;
+   };
 
-    //  Session Storage
-    const urlPath = window.location.pathname
+   // Object for fetch data
+   const searchParams = {
+      name: cardName,
+      colors: colors.toString(),
+      types: type,
+      rarity: rarity,
+   };
+   // Delete empty keys from searchParams
+   const deleteObjectKeys = (obj) => {
+      for (let key in obj) {
+         if (
+            obj[key].length === 0 ||
+            obj[key] === "" ||
+            obj[key] === "Any type" ||
+            obj[key] === "Any rarity"
+         ) {
+            delete obj[key];
+         }
+      }
+      return obj;
+   };
 
-    useEffect(() => {
-        const colorData = JSON.parse(sessionStorage.getItem("color"))
-        const colorsCheckBoxData = JSON.parse(sessionStorage.getItem("colorsCheckBoxIndex"))
-        const typeData = JSON.parse(sessionStorage.getItem("type"))
-        const rarityData = JSON.parse(sessionStorage.getItem("rarity"))
+   useEffect(() => {
+      if (isClicked) {
+         console.log("fetching data...");
 
-        const cardNameData = JSON.parse(sessionStorage.getItem("cardName"))
-        const cardNameIsCheckedData = JSON.parse(sessionStorage.getItem("cardNameIsChecked"))
+         history.push({
+            pathname: "/cards/query",
+            search: `?${Object.values(deleteUrlParams(urlParams))}page-${page}`,
+            /*state: {
+               ...deleteObjectKeys(searchParams),
+               page: page,
+               checkBox: colorsCheckBox,
+            },*/
+         });
 
-        if (urlPath.includes("cards")) {
-            colorData.map(color => dispatch(selectColors(color)))
-            colorsCheckBoxData.map(checkBox => dispatch(colorsCheckBox(checkBox)))
-            dispatch(selectType(typeData))
-            dispatch(selectRarity(rarityData))
-
-            //Trigger
-            dispatch(setPageReset())
-            dispatch(setFilterClicked(true))
-        } else if (urlPath.includes("name")) {
-            dispatch(setCardName(cardNameData))
-            dispatch(cardNameCheckBox(cardNameIsCheckedData))
-
-            //Trigger
-            dispatch(setSearchPageReset())
-            dispatch(setSearchClicked(true))
-        } else if (urlPath.includes("cardID")) {
-            colorData.map(color => dispatch(selectColors(color)))
-            colorsCheckBoxData.map(checkBox => dispatch(colorsCheckBox(checkBox)))
-            dispatch(selectType(typeData))
-            dispatch(selectRarity(rarityData))
-            dispatch(setCardName(cardNameData))
-            dispatch(cardNameCheckBox(cardNameIsCheckedData))
-
-            //Trigger
-            if (cardNameData) {
-                dispatch(setSearchPageReset())
-                dispatch(setSearchClicked(true))
-            } else {
-                dispatch(setPageReset())
-                dispatch(setFilterClicked(true))
+         getAllCards(deleteObjectKeys(searchParams), page).then(
+            (allCardsData) => {
+               console.log(allCardsData);
+               setCardData((prev) =>
+                  page === 1 ? allCardsData : [...prev, ...allCardsData]
+               );
+               dispatch(
+                  setStatus(allCardsData.length === 0 ? "No more cards!" : "")
+               );
             }
-        }
-        else {
-            sessionStorage.clear()
-        }
-    }, [])
+         );
+         dispatch(setIsClicked(false));
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [isClicked, page]);
 
-    useEffect(() => {
-        sessionStorage.setItem("color", JSON.stringify(colorEvent))
-        sessionStorage.setItem("colorsCheckBoxIndex", JSON.stringify(colorIsChecked))
-        sessionStorage.setItem("type", JSON.stringify(typeEvent))
-        sessionStorage.setItem("rarity", JSON.stringify(rarityEvent))
-    }, [colorEvent, colorIsChecked, typeEvent, rarityEvent])
+   return (
+      <div className="App">
+         <Switch>
+            <Route path="/" exact>
+               <h4 className="status">{statusMessage}</h4>
+               <Header />
+            </Route>
 
-    useEffect(() => {
-        sessionStorage.setItem("cardName", JSON.stringify(cardName))
-        sessionStorage.setItem("cardNameIsChecked", JSON.stringify(isChecked))
-    }, [cardName, isChecked])
-    //----------
+            <Route path="/cards/:query">
+               <h4 className="status">{statusMessage}</h4>
+               <Header />
+               <Deck cardData={cardData} />
+            </Route>
 
-
-    // Get the cards with the "Search" button
-    useEffect(() => {
-        if (searchClicked || searchPage > 1) {
-            if (isChecked) {
-                // Exact name match      
-                getCardByName(`"${cardName}"`).then(nameData => {
-                    //  Check how many cards do we get from fetch
-                    setCurrentCards(nameData.header)
-
-                    //  Pagination
-                    setTotalCount(nameData.header / 100)
-                    setRemain((100 - (nameData.header % 100)) / 100)
-
-                    setTestFilter(nameData.body.cards)
-
-                    setIsLoaded(true)
-                    dispatch(setSearchClicked(false))
-                })
-            } else {
-                // Partial name match
-                getCardByName(cardName).then(nameData => {
-                    //  Check how many cards do we get from fetch
-                    setCurrentCards(nameData.header)
-
-                    //  Pagination
-                    setTotalCount(nameData.header / 100)
-                    setRemain((100 - (nameData.header % 100)) / 100)
-
-                    //  Render cards depends on scroll position
-                    setTestFilter(prevState => searchPage === 1 ? nameData.body.cards : [...prevState, ...nameData.body.cards])
-
-                    setIsLoaded(true)
-                    dispatch(setSearchClicked(false))
-
-                })
-            }
-        }
-    }, [searchClicked, searchPage])
-    //----------
-
-
-    // Get the cards with the "Filter" button
-    useEffect(() => {
-        if (filterClicked || page > 1) {
-            getAllCards(colorEvent.length > 0 ? colorEvent : "", typeEvent !== "Any type" ? typeEvent : "", rarityEvent !== "Any rarity" ? rarityEvent : "", page).then((allCardsData) => {
-                //  Check how many cards do we get from fetch   
-                setCurrentCards(allCardsData.header)
-
-                //  Pagination
-                setTotalCount(allCardsData.header / 100)
-                setRemain((100 - (allCardsData.header % 100)) / 100)
-
-                //  Render cards depends on scroll position
-                setTestFilter(prevState => page === 1 ? allCardsData.body.cards : [...prevState, ...allCardsData.body.cards])
-
-                setIsLoaded(true)
-                dispatch(setFilterClicked(false))
-
-            })
-        }
-    }, [filterClicked, page])
-    //----------
-
-
-    return (
-        <Router >
-            <div className="App">
-                <Switch>
-                    <Route path="/" exact>
-                        <h4 className="counter">Current number of cards: {currentCards}</h4>
-                        <Header />
-                    </Route>
-                    <Route path={["/cards/:filter", "/name/:name"]}>
-                        <h4 className="counter">Current number of cards: {currentCards}</h4>
-                        <Header />
-                        <Filter isLoaded={isLoaded} testFilter={testFilter} remain={remain} totalCount={totalCount} />
-                    </Route>
-                    <Route path="/cardID/:id" component={Details} />
-                </Switch>
-            </div>
-
-        </Router >
-    );
-}
+            <Route path="/id/:id" component={Details} />
+         </Switch>
+      </div>
+   );
+};
 
 export default App;
