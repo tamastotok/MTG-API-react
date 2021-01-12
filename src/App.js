@@ -11,13 +11,6 @@ import "./App.css";
 
 //*   API:              https://docs.magicthegathering.io
 //*   Javascript SDK:   https://github.com/MagicTheGathering/mtg-sdk-javascript
-//*   Typescript SDK:   https://github.com/MagicTheGathering/mtg-sdk-typescript
-
-//* Tested:
-//* Chrome  87.0.4280.66    64bit
-//* Opera   72.0.3815.320   64bit
-//* Edge    87.0.664.47     64bit
-//* Firefox 83.0            64bit
 
 // scrollTo(0,0) doesn't work on Safari
 
