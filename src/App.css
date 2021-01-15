@@ -16,7 +16,7 @@ a {
 
 #header {
    width: fit-content;
-   height: 160px;
+   height: 280px;
    display: flex;
    align-items: flex-start;
    left: 0;
@@ -48,22 +48,24 @@ a {
 }
 
 .cards-container {
-   height: 650px;
-   display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(223px, 1fr));
-   row-gap: 10px;
-   position: absolute;
-   bottom: 0;
-   left: 0;
-   right: 0;
+   min-width: 199px;
+   width: fit-content;
+   max-width: 1045px;
+   display: flex;
+   flex-wrap: wrap;
+   height: 548px;
+   left: 0px;
+   right: 0px;
    margin: auto;
+   padding: 0 20px;
    overflow-y: scroll;
    overflow-x: hidden;
 }
 
 .card img {
-   width: 223px;
-   height: 311px;
+   width: 189px;
+   height: 264px;
+   margin: 5px;
 }
 
 .hide {
@@ -167,10 +169,12 @@ a {
 #jump-to-top {
    border-radius: 50%;
    position: absolute;
-   bottom: 5%;
-   right: 5%;
+   top: 20px;
+   right: 20px;
    cursor: pointer;
    background-color: lightskyblue;
+   width: 32px;
+   height: 32px;
 }
 
 .card-details-container {
