@@ -14,11 +14,9 @@ const ColorFilter = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      if (colors.length > 0) {
-         dispatch(setIsClicked(true));
-         dispatch(setPageReset());
-         dispatch(setStatus("Loading..."));
-      }
+      dispatch(setIsClicked(true));
+      dispatch(setPageReset());
+      dispatch(setStatus("Loading..."));
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [colors]);
 

@@ -81,8 +81,7 @@ const App = () => {
 
    useEffect(() => {
       if (isClicked) {
-         console.log("fetching data...");
-
+         //console.log("fetching data...");
          history.push({
             pathname: "/cards/query",
             search: `?${Object.values(deleteUrlParams(urlParams))}page-${page}`,
@@ -95,7 +94,6 @@ const App = () => {
 
          getAllCards(deleteObjectKeys(searchParams), page).then(
             (allCardsData) => {
-               console.log(allCardsData);
                setCardData((prev) =>
                   page === 1 ? allCardsData : [...prev, ...allCardsData]
                );
@@ -120,7 +118,7 @@ const App = () => {
             <Route path="/cards/:query">
                <h4 className="status">{statusMessage}</h4>
                <Header />
-               <Deck cardData={cardData} />
+               {cardData.length > 0 ? <Deck cardData={cardData} /> : null}
             </Route>
 
             <Route path="/id/:id" component={Details} />
