@@ -9,6 +9,7 @@ import { setStatus } from "../state_management/actions/statusMessage";
 const Deck = ({ cardData }) => {
    const page = useSelector((state) => state.page);
    const statusMessage = useSelector((state) => state.statusMessage);
+   const isClicked = useSelector((state) => state.isClicked);
    const dispatch = useDispatch();
 
    // Scroll events
@@ -40,10 +41,10 @@ const Deck = ({ cardData }) => {
    };
 
    useEffect(() => {
-      if (page === 1) {
+      if (page === 1 || isClicked) {
          jumpToTop();
       }
-   }, [page]);
+   }, [page, isClicked]);
 
    // Render
    return (
