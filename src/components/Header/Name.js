@@ -12,12 +12,12 @@ const Name = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      if (cardName.length > 2) {
+      if (cardName.length > 2 || cardName.length === 0) {
          dispatch(setIsClicked(true));
          dispatch(setPageReset());
          dispatch(setStatus("Loading..."));
       }
-      if (cardName.length > 0) {
+      if (cardName.length < 3) {
          dispatch(setStatus("Min. 3 characters!"));
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
