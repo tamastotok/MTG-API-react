@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "./../state_management/actions/page";
+import { setPage } from "./../actions/page";
 import Card from "./Card";
 import arrow from "./../images/arrow.png";
-import { setIsClicked } from "../state_management/actions/isClicked";
-import { setStatus } from "../state_management/actions/statusMessage";
+import { setIsClicked } from "../actions/isClicked";
+import { setStatus } from "../actions/statusMessage";
 
 const Deck = ({ cardData }) => {
    const page = useSelector((state) => state.page);

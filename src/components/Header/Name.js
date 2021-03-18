@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCardName } from "./../../state_management/actions/cardName";
-import { setStatus } from "./../../state_management/actions/statusMessage";
-import { setIsClicked } from "./../../state_management/actions/isClicked";
-import { setPageReset } from "../../state_management/actions/page";
+import { setCardName } from "./../../actions/cardName";
+import { setStatus } from "./../../actions/statusMessage";
+import { setIsClicked } from "./../../actions/isClicked";
+import { setPageReset } from "../../actions/page";
 
 const Name = () => {
    const cardNameRef = useRef();

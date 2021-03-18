@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPageReset } from "../../state_management/actions/page";
-import { selectType } from "./../../state_management/actions/type";
-import { setIsClicked } from "./../../state_management/actions/isClicked";
-import { setStatus } from "./../../state_management/actions/statusMessage";
+import { setPageReset } from "../../actions/page";
+import { selectType } from "./../../actions/type";
+import { setIsClicked } from "./../../actions/isClicked";
+import { setStatus } from "./../../actions/statusMessage";
 
 const TypeFilter = () => {
    const types = [

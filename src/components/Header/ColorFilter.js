@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectColors } from "./../../state_management/actions/colors";
-import { colorsCheckBox } from "./../../state_management/actions/colorsCheckBox";
-import { setPageReset } from "../../state_management/actions/page";
-import { setIsClicked } from "./../../state_management/actions/isClicked";
-import { setStatus } from "./../../state_management/actions/statusMessage";
+import { selectColors } from "./../../actions/colors";
+import { colorsCheckBox } from "./../../actions/colorsCheckBox";
+import { setPageReset } from "../../actions/page";
+import { setIsClicked } from "./../../actions/isClicked";
+import { setStatus } from "./../../actions/statusMessage";
 
 const ColorFilter = () => {
    const everyColor = ["Black", "Blue", "Green", "Red", "White"];

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsClicked } from "./../../state_management/actions/isClicked";
-import { selectRarity } from "./../../state_management/actions/rarity";
-import { setStatus } from "./../../state_management/actions/statusMessage";
-import { setPageReset } from "../../state_management/actions/page";
+import { setIsClicked } from "./../../actions/isClicked";
+import { selectRarity } from "./../../actions/rarity";
+import { setStatus } from "./../../actions/statusMessage";
+import { setPageReset } from "../../actions/page";
 
 const RarityFilter = () => {
    const rarities = [
