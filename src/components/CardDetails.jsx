@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from "react";
-
-import { Link } from "react-router-dom";
-import { getCardByID } from "./API";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLoading } from "../actions/set_loading";
 import card from "./../images/card.gif";
 
-const Details = ({ match }) => {
-   const [cardDetail, setCardDetail] = useState([]);
-   const [isLoaded, setIsLoaded] = useState(false);
+export default function CardDetails({ singleCardData }) {
+   const isLoading = useSelector((state) => state.isLoading);
 
-   useEffect(() => {
-      console.log("fetching data from details...");
-      getCardByID(match.params.id.replace("id=", "")).then((cardData) => {
-         setCardDetail(cardData.card);
-         setIsLoaded(true);
-      });
-   }, [match]);
+   const nameState = useSelector((state) => state.cards.name);
+   const colorsState = useSelector((state) => state.cards.colors);
+   const typeState = useSelector((state) => state.cards.type);
+   const rarityState = useSelector((state) => state.cards.rarity);
+
+   const dispatch = useDispatch();
+   const history = useHistory();
+
+   const handleClick = () => {
+      // if name, color, type, rarity is empty then home page
+      if (!nameState && !colorsState && !typeState && !rarityState) {
+         history.push("/");
+      } else {
+         history.goBack();
+      }
+      dispatch(setIsLoading(false));
+   };
 
    const {
       imageUrl,
@@ -29,20 +38,21 @@ const Details = ({ match }) => {
       toughness,
       text,
       flavor,
-   } = cardDetail;
+   } = singleCardData;
 
    return (
-      <React.Fragment>
-         {!isLoaded ? (
+      <>
+         {!isLoading ? (
             <div className="loading-screen">
                <h3>Loading</h3>
                <img src={card} alt={"card-animation"} />
             </div>
          ) : (
             <div className="card-details-container">
-               <Link to="/">
-                  <h3 className="back-button">BACK</h3>
-               </Link>
+               <button onClick={handleClick} className="back-button">
+                  BACK
+               </button>
+
                <div className="content">
                   <img src={imageUrl} alt={name} />
                   <table>
@@ -94,8 +104,6 @@ const Details = ({ match }) => {
                </div>
             </div>
          )}
-      </React.Fragment>
+      </>
    );
-};
-
-export default Details;
+}

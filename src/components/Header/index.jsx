@@ -1,17 +1,17 @@
 import React from "react";
 import Name from "./Name";
-import ColorFilter from "./ColorFilter";
-import RarityFilter from "./RarityFilter";
-import TypeFilter from "./TypeFilter";
+import Colors from "./Colors";
+import Rarity from "./Rarity";
+import Type from "./Type";
 
 const Header = () => {
    return (
       <div id="header">
          <Name />
-         <ColorFilter />
+         <Colors />
          <div id="dropdown-container">
-            <TypeFilter />
-            <RarityFilter />
+            <Type />
+            <Rarity />
          </div>
       </div>
    );

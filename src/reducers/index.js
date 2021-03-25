@@ -1,22 +1,16 @@
 import { combineReducers } from "redux";
-import colorsReducer from "./colors";
-import colorsCheckBoxReducer from "./colorsCheckBox";
-import typeReducer from "./type";
-import rarityReducer from "./rarity";
-import pageReducer from "./page";
-import cardNameReducer from "./cardName";
-import isClickedReducer from "./isClicked";
-import statusMessageReducer from "./statusMessage";
+import cardsReducer from "./cards-reducer";
+import checkboxReducer from "./checkbox-reducer";
+import pageReducer from "./page-reducer";
+import isLoadingReducer from "./set-loading";
+import statusReducer from "./set-status";
 
-const allReducers = combineReducers({
-   colors: colorsReducer,
-   colorsCheckBox: colorsCheckBoxReducer,
-   type: typeReducer,
-   rarity: rarityReducer,
+const reducers = combineReducers({
+   cards: cardsReducer,
+   checkbox: checkboxReducer,
    page: pageReducer,
-   cardName: cardNameReducer,
-   isClicked: isClickedReducer,
-   statusMessage: statusMessageReducer,
+   isLoading: isLoadingReducer,
+   status: statusReducer,
 });
 
-export default allReducers;
+export default reducers;

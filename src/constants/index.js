@@ -1,18 +1,14 @@
-export const CHANGE_CARDNAME = "CHANGE_CARDNAME ";
+export const SET_ID = "SET_ID ";
+export const SET_NAME = "SET_NAME ";
+export const SET_COLORS = "SET_COLORS";
+export const SET_TYPE = "SET_TYPE";
+export const SET_RARITY = "SET_RARITY";
 
-export const SELECT_COLOR = "SELECT_COLOR";
-export const RESET_COLOR = "RESET_COLOR";
+export const SET_IS_LOADING = "SET_IS_LOADING";
 
-export const COLORS_CHECKBOX_CHECKED = "COLORS_CHECKBOX_CHECKED";
-export const COLORS_CHECKBOX_RESET = "COLORS_CHECKBOX_RESET";
+export const SET_CHECKBOX = "SET_CHECKBOX";
 
-export const SET_IS_CLICKED = "SET_IS_CLICKED";
-
-export const PAGE_NUMBER_INCREMENT = "PAGE_NUMBER_INCREMENT";
-export const PAGE_NUMBER_RESET = "PAGE_NUMBER_RESET";
-
-export const SELECT_RARITY = "SELECT_RARITY";
+export const INCREMENT_PAGE_NUMBER = "INCREMENT_PAGE_NUMBER";
+export const RESET_PAGE_NUMBER = "RESET_PAGE_NUMBER";
 
 export const SET_STATUS = "SET_STATUS";
-
-export const SELECT_TYPE = "SELECT_TYPE";

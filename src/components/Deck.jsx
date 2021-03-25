@@ -1,20 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "./../actions/page";
-import Card from "./Card";
+import { incrementPage } from "../actions/page_action";
+import { setStatus } from "../actions/set_status";
+import SingleCard from "./SingleCard";
 import arrow from "./../images/arrow.png";
-import { setIsClicked } from "../actions/isClicked";
-import { setStatus } from "../actions/statusMessage";
 
-const Deck = ({ cardData }) => {
+export default function Deck({ cardsData }) {
    const page = useSelector((state) => state.page);
    const statusMessage = useSelector((state) => state.statusMessage);
-   const isClicked = useSelector((state) => state.isClicked);
+
    const dispatch = useDispatch();
 
-   // Scroll events
+   /* store a scroll value,
+    "jump to top" button will show/hide depends on this value */
    const [scrollPosition, setScrollPosition] = useState(0);
-   const toScrollTop = useRef();
+
+   // ref to a scrollable div
+   const toScrollTop = useRef(null);
 
    // onScroll function for infinite scroll
    const handleScroll = (e) => {
@@ -22,16 +24,25 @@ const Deck = ({ cardData }) => {
       setScrollPosition(scrollTop);
       if (scrollHeight - scrollTop === clientHeight) {
          if (statusMessage === "No more cards!") {
-            dispatch(setIsClicked(false));
+            return;
          } else {
-            dispatch(setIsClicked(true));
-            dispatch(setPage());
             dispatch(setStatus("Loading..."));
+            dispatch(incrementPage());
          }
       }
    };
 
-   // Jump back to top button
+   // scroll position jump back to top when page reset
+   useEffect(() => {
+      if (page === 1) {
+         window.scrollTo({
+            behavior: "smooth",
+            top: toScrollTop.current.scrollTo(0, 0),
+         });
+      }
+   }, [page]);
+
+   // jump back to top button
    const jumpToTop = () => {
       window.scrollTo({
          behavior: "smooth",
@@ -40,23 +51,16 @@ const Deck = ({ cardData }) => {
       setScrollPosition(0);
    };
 
-   useEffect(() => {
-      if (page === 1 || isClicked) {
-         jumpToTop();
-      }
-   }, [page, isClicked]);
-
-   // Render
    return (
-      <React.Fragment>
+      <>
          <div
             onScroll={(e) => handleScroll(e.currentTarget)}
             ref={toScrollTop}
             className="cards-container"
          >
-            {cardData.map((item, index) => {
+            {cardsData.map((item, index) => {
                return (
-                  <Card
+                  <SingleCard
                      key={index}
                      id={item.id}
                      img={item.imageUrl}
@@ -73,8 +77,6 @@ const Deck = ({ cardData }) => {
             src={arrow}
             alt="arrow"
          />
-      </React.Fragment>
+      </>
    );
-};
-
-export default Deck;
+}
