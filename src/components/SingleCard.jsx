@@ -21,7 +21,12 @@ export default function SingleCard({ img, id, name }) {
                search: `id=${id}`,
             }}
          >
-            <img onClick={handleClick} src={img ? img : backside} alt={name} />
+            <img
+               onClick={handleClick}
+               src={img ? img : backside}
+               loading="lazy"
+               alt={name}
+            />
          </Link>
       </div>
    );
