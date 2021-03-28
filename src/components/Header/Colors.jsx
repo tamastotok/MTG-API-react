@@ -4,12 +4,11 @@ import { setColors } from "../../actions/cards_action";
 import { setCheckbox } from "../../actions/checkbox_action";
 import { resetPage } from "../../actions/page_action";
 import { setStatus } from "../../actions/set_status";
+import { DEFAULT_COLORS } from "../../data";
 
 export default function Colors() {
-   const everyColor = ["Black", "Blue", "Green", "Red", "White"];
    const colors = useSelector((state) => state.cards.colors);
    const colorsParentRef = useRef(null);
-
    const dispatch = useDispatch();
 
    const handleClick = (e) => {
@@ -23,7 +22,7 @@ export default function Colors() {
    // if yes then that checkbox is checked
    const checkboxChecked = () => {
       if (colorsParentRef.current) {
-         for (let i = 0; i < everyColor.length; i++) {
+         for (let i = 0; i < DEFAULT_COLORS.length; i++) {
             if (
                colors.length > 0 &&
                Object.values(colors).includes(
@@ -44,7 +43,7 @@ export default function Colors() {
 
    return (
       <div className="color-checkbox-container" ref={colorsParentRef}>
-         {everyColor.map((item, index) => {
+         {DEFAULT_COLORS.map((item, index) => {
             return (
                <div key={index} className="color-checkbox">
                   <input

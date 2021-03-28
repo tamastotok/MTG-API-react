@@ -3,29 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPage } from "../../actions/page_action";
 import { setType } from "../../actions/cards_action";
 import { setStatus } from "../../actions/set_status";
+import { DEFAULT_TYPES } from "../../data";
 
 export default function Type() {
-   const types = [
-      "Any type",
-      "Artifact",
-      "Conspiracy",
-      "Creature",
-      "Enchantment",
-      "Instant",
-      "Land",
-      "Phenomenon",
-      "Plane",
-      "Planeswalker",
-      "Scheme",
-      "Sorcery",
-      "Tribal",
-      "Vanguard",
-   ];
-
    const [showMenu, setShowMenu] = useState(false);
-
    const type = useSelector((state) => state.cards.type);
-
    const dispatch = useDispatch();
 
    const dropDown = (e) => {
@@ -47,7 +29,7 @@ export default function Type() {
          </button>
          {showMenu ? (
             <div className="menu">
-               {types.map((item, index) => {
+               {DEFAULT_TYPES.map((item, index) => {
                   return (
                      <button key={index} value={item} onClick={handleClick}>
                         {item}
