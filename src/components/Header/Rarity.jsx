@@ -6,40 +6,47 @@ import { resetPage } from "../../actions/page_action";
 import { DEFAULT_RARITIES } from "../../data";
 
 export default function Rarity() {
-   const [showMenu, setShowMenu] = useState(false);
-   const rarity = useSelector((state) => state.cards.rarity);
-   const dispatch = useDispatch();
+    const [showMenu, setShowMenu] = useState(false);
+    const rarity = useSelector((state) => state.cards.rarity);
+    const dispatch = useDispatch();
 
-   const dropDown = (e) => {
-      e.preventDefault();
-      setShowMenu(!showMenu);
-   };
+    const dropDown = (e) => {
+        e.preventDefault();
+        setShowMenu(!showMenu);
+    };
 
-   const handleClick = (e) => {
-      setShowMenu(!showMenu);
-      dispatch(
-         setRarity(e.target.value === "Any rarity" ? "" : e.target.value)
-      );
-      dispatch(resetPage());
-      dispatch(setStatus("Loading..."));
-   };
+    const handleClick = (e) => {
+        setShowMenu(!showMenu);
+        if (e.target.value === "Any rarity") {
+            dispatch(setStatus(""));
+            dispatch(setRarity(""));
+        } else {
+            dispatch(setRarity(e.target.value));
+            dispatch(resetPage());
+            dispatch(setStatus("Loading..."));
+        }
+    };
 
-   return (
-      <div className="dropdown">
-         <button className="button-active" onClick={dropDown}>
-            {rarity || "Rarity"}
-         </button>
-         {showMenu ? (
-            <div className="menu">
-               {DEFAULT_RARITIES.map((item, index) => {
-                  return (
-                     <button key={index} value={item} onClick={handleClick}>
-                        {item}
-                     </button>
-                  );
-               })}
-            </div>
-         ) : null}
-      </div>
-   );
+    return (
+        <div className="dropdown">
+            <button className="button-active" onClick={dropDown}>
+                {rarity || "Rarity"}
+            </button>
+            {showMenu ? (
+                <div className="menu">
+                    {DEFAULT_RARITIES.map((item, index) => {
+                        return (
+                            <button
+                                key={index}
+                                value={item}
+                                onClick={handleClick}
+                            >
+                                {item}
+                            </button>
+                        );
+                    })}
+                </div>
+            ) : null}
+        </div>
+    );
 }
